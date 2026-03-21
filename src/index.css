@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-purple: #8b5cf6;
+  --color-brand-deep: #0f172a;
+  --color-brand-dark: #1e293b;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-deep text-slate-200 antialiased selection:bg-brand-purple selection:text-white;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  /* ━━━━━━━━━━━━━━━━ LIGHT MODE — Warm Brown/Beige Palette ━━━━━━━━━━━━━━━━ */
+
+  html.light body {
+    background-color: #f5efe6;   /* warm parchment beige */
+    color: #2c1a0e;              /* deep warm brown */
+  }
+
+  html.light section {
+    background-color: transparent !important;
+  }
+
+  /* Headings & strong text */
+  html.light h1,
+  html.light h2,
+  html.light h3,
+  html.light h4 {
+    color: #1c0f07 !important;
+  }
+
+  /* Scrollbar thumb */
+  html.light ::-webkit-scrollbar-thumb {
+    background: #c5a882;
+  }
+}
+
+@layer utilities {
+
+  /* ─── Dark mode glass (default) ─── */
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  /* ─── Light mode glass: warm white cards with brown border ─── */
+  html.light .glass {
+    background-color: rgba(255, 249, 240, 0.85) !important;  /* cream white */
+    border-color: rgba(164, 109, 60, 0.18) !important;       /* warm brown border */
+    box-shadow: 0 4px 20px rgba(100, 60, 20, 0.08) !important;
+    backdrop-filter: blur(12px);
+  }
+
+  /* ─── Text colours ─── */
+  html.light .text-white {
+    color: #1c0f07 !important;       /* deep brown — replaces pure white text */
+  }
+
+  html.light .text-slate-200 {
+    color: #3d2b1a !important;
+  }
+
+  html.light .text-slate-300 {
+    color: #5c3d25 !important;
+  }
+
+  html.light .text-slate-400 {
+    color: #7a5233 !important;
+  }
+
+  html.light .text-slate-500 {
+    color: #9a6d4a !important;
+  }
+
+  /* ─── Backgrounds ─── */
+  html.light .bg-brand-deep {
+    background-color: #f5efe6 !important;
+  }
+
+  html.light .bg-brand-deep\/30 {
+    background-color: rgba(245, 239, 230, 0.5) !important;
+  }
+
+  html.light .bg-brand-deep\/50 {
+    background-color: rgba(245, 239, 230, 0.65) !important;
+  }
+
+  html.light .bg-brand-deep\/80 {
+    background-color: rgba(245, 239, 230, 0.88) !important;
+  }
+
+  html.light .bg-white\/5 {
+    background-color: rgba(255, 249, 240, 0.6) !important;
+  }
+
+  html.light .bg-white\/10 {
+    background-color: rgba(255, 249, 240, 0.75) !important;
+  }
+
+  /* ─── Borders ─── */
+  html.light .border-white\/5 {
+    border-color: rgba(164, 109, 60, 0.12) !important;
+  }
+
+  html.light .border-white\/10 {
+    border-color: rgba(164, 109, 60, 0.2) !important;
+  }
+
+  html.light .border-t.border-white\/5 {
+    border-color: rgba(164, 109, 60, 0.15) !important;
+  }
+
+  /* ─── Form inputs ─── */
+  html.light input,
+  html.light textarea {
+    background-color: rgba(255, 245, 230, 0.9) !important;
+    border-color: rgba(164, 109, 60, 0.25) !important;
+    color: #1c0f07 !important;
+  }
+
+  html.light input::placeholder,
+  html.light textarea::placeholder {
+    color: #b08060 !important;
+  }
+
+  /* ─── Navbar background ─── */
+  html.light nav,
+  html.light header {
+    background-color: rgba(245, 239, 230, 0.92) !important;
+    border-bottom-color: rgba(164, 109, 60, 0.15) !important;
+  }
+
+  /* ─── Tags & badges: dark backgrounds → warm beige ─── */
+  html.light .bg-white\/10 {
+    background-color: rgba(200, 155, 105, 0.12) !important;
+  }
+
+  html.light .bg-slate-800,
+  html.light .bg-slate-900,
+  html.light .bg-slate-950 {
+    background-color: #efe4d5 !important;
+  }
+
+  html.light .text-slate-600 {
+    color: #6b4226 !important;
+  }
+
+  /* ─── Keep purple accent intact ─── */
+  html.light .text-brand-purple {
+    color: #7c3aed !important;
+  }
+
+  html.light .border-brand-purple\/40 {
+    border-color: rgba(124, 58, 237, 0.35) !important;
+  }
+
+  /* ─── Hover states ─── */
+  html.light .hover\:bg-white\/10:hover {
+    background-color: rgba(200, 155, 105, 0.18) !important;
+  }
+
+  /* ─── Glass-hover utility ─── */
+  .glass-hover {
+    @apply hover:bg-white/10 hover:border-brand-purple/50 transition-all duration-300;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-purple to-blue-500;
+  }
+}
