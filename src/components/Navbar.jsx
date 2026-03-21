@@ -63,10 +63,10 @@ export default function Navbar() {
                 </ScrollLink>
               ))}
               <div className="flex items-center space-x-4 pl-4 border-l border-white/10">
-                <a href="https://github.com" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">
+                <a href="https://github.com/Chetanareddy18" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">
                   <Github className="w-5 h-5" />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/in/palla-chetana-reddy/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">
                   <Linkedin className="w-5 h-5" />
                 </a>
               </div>
