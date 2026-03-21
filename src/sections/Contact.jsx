@@ -8,8 +8,8 @@ const contacts = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'pallachetaan@gmail.com',
-    link: 'mailto:pallachetaan@gmail.com'
+    value: 'pallachetana@gmail.com',
+    link: 'mailto:pallachetana@gmail.com'
   },
   {
     icon: Linkedin,
