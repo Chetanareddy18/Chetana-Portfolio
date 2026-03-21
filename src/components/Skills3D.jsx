@@ -3,17 +3,141 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Float, Sphere, Html, Stars } from '@react-three/drei';
 
 const skillsData = [
-  { title: "AI / ML", items: ["Scikit-learn", "Model Development", "Model Evaluation", "Hyperparameter Tuning"] },
-  { title: "Deep Learning", items: ["ANN", "CNN", "GNN", "Computer Vision", "Time Series Forecasting"] },
-  { title: "NLP & GenAI", items: ["NLP", "LLMs", "Generative AI", "RAG", "Agentic AI", "LangChain", "LangGraph", "Hugging Face", "Prompt Engineering", "Embeddings"] },
-  { title: "Programming", items: ["Python", "JavaScript", "Java", "SQL", "C"] },
-  { title: "Web Dev", items: ["React", "Node.js", "Flask", "Django", "FastAPI", "HTML5", "CSS3", "Bootstrap"] },
-  { title: "Data Science", items: ["Pandas", "NumPy", "EDA", "Feature Engineering", "Statistical Analysis", "Power BI", "Matplotlib", "Seaborn", "Plotly"] },
-  { title: "Big Data", items: ["Hadoop", "PySpark", "Big Data Processing", "Data Engineering"] },
-  { title: "Databases", items: ["MySQL", "MongoDB", "NoSQL", "Pinecone"] },
-  { title: "Cloud", items: ["AWS", "Azure", "IBM Cloud", "n8n"] },
-  { title: "Tools", items: ["Git", "GitHub", "Jupyter Notebook", "VS Code"] },
-  { title: "Soft Skills", items: ["Problem Solving", "Analytical Thinking", "Communication", "Collaboration", "Adaptability"] },
+  { 
+    title: "AI / ML", 
+    items: [
+      "Scikit-learn",
+      "ML Algorithms",
+      "Model Development",
+      "Model Training",
+      "Model Evaluation",
+      "Hyperparameter Tuning",
+      "Statistics for Data Science"
+    ] 
+  },
+
+  { 
+    title: "Deep Learning", 
+    items: [
+      "ANN",
+      "CNN",
+      "GNN",
+      "LSTM",
+      "Computer Vision",
+      "Time Series Forecasting"
+    ] 
+  },
+
+  { 
+    title: "NLP & GenAI", 
+    items: [
+      "NLP",
+      "LLMs",
+      "Generative AI",
+      "RAG",
+      "Agentic AI",
+      "LangChain",
+      "LangGraph",
+      "Hugging Face",
+      "Prompt Engineering",
+      "Embeddings"
+    ] 
+  },
+
+  { 
+    title: "Programming", 
+    items: [
+      "Python",
+      "JavaScript",
+      "Java",
+      "SQL",
+      "C"
+    ] 
+  },
+
+  { 
+    title: "Web Dev", 
+    items: [
+      "React",
+      "Node.js",
+      "Flask",
+      "Django",
+      "FastAPI",
+      "HTML5",
+      "CSS3",
+      "Bootstrap"
+    ] 
+  },
+
+  { 
+    title: "Data Science", 
+    items: [
+      "Pandas",
+      "NumPy",
+      "EDA",
+      "Feature Engineering",
+      "Data Preprocessing",
+      "Statistical Analysis",
+      "Data Interpretation",
+      "Power BI",
+      "Matplotlib",
+      "Seaborn",
+      "Plotly"
+    ] 
+  },
+
+  { 
+    title: "Big Data", 
+    items: [
+      "Hadoop",
+      "PySpark",
+      "Big Data Processing",
+      "Data Engineering"
+    ] 
+  },
+
+  { 
+    title: "Databases", 
+    items: [
+      "MySQL",
+      "MongoDB",
+      "NoSQL",
+      "Pinecone"
+    ] 
+  },
+
+  { 
+    title: "Cloud", 
+    items: [
+      "AWS",
+      "Azure",
+      "IBM Cloud",
+      "n8n"
+    ] 
+  },
+
+  { 
+    title: "Tools", 
+    items: [
+      "Git",
+      "GitHub",
+      "Jupyter Notebook",
+      "Google Colab",
+      "VS Code",
+      "Excel"
+    ] 
+  },
+
+  { 
+    title: "Soft Skills", 
+    items: [
+      "Problem Solving",
+      "Analytical Thinking",
+      "Communication",
+      "Collaboration",
+      "Adaptability"
+    ] 
+  },
 ];
 
 function OrbitingSkill({ skill, radius, index, total }) {
