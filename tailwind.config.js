@@ -7,10 +7,7 @@ export default {
         "brand-deep": "#0f172a",
         "brand-dark": "#1e293b",
       },
-      fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-      },
     },
   },
   plugins: [],
-};
+}
