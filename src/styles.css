@@ -948,3 +948,17 @@ html.ink-cursor input, html.ink-cursor textarea { cursor: text !important; }
 
 .ow-q { margin: 0; padding-left: 12px; border-left: 3px solid #1a8917; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink); }
 .pol-note { font-size: 23px; line-height: 32px; }
+
+/* beyond the resume: light sticky notes */
+.stickies { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 16px; padding-top: 8px; }
+@media (min-width: 900px) { .stickies { grid-template-columns: repeat(4, 1fr); gap: 30px 24px; } }
+.sticky {
+  position: relative; padding: 22px 16px 16px; color: #1f1b16; transform: rotate(var(--tilt, 0deg));
+  box-shadow: 0 1px 2px rgba(0,0,0,.12), 0 10px 16px -10px rgba(0,0,0,.35);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+}
+.sticky:hover { transform: rotate(0deg) translateY(-4px) scale(1.04); box-shadow: 0 2px 3px rgba(0,0,0,.12), 0 18px 24px -12px rgba(0,0,0,.4); z-index: 1; }
+.sticky-tape { position: absolute; top: -9px; left: 50%; width: 64px; height: 18px; transform: translateX(-50%) rotate(-3deg); background: rgba(255,255,255,.55); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.sticky-icon { font-size: 26px; display: block; margin-bottom: 6px; }
+.sticky-t { font-family: var(--hand); font-weight: 700; font-size: 23px; line-height: 1.05; }
+.sticky-s { font-family: var(--hand); font-size: 19px; line-height: 1.15; margin-top: 6px; color: #3a352c; }

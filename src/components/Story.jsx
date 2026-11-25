@@ -286,37 +286,27 @@ export function Constellation() {
   );
 }
 
-/* ───────────── Beyond the resume ───────────── */
+/* ───────────── Beyond the resume: sticky notes ───────────── */
+const NOTE_COLORS = ['#fff3a8', '#ffd6e0', '#c8f0d8', '#cfe3ff', '#ffe0b8', '#e6d9ff', '#fff3a8', '#d8f3f0'];
+const NOTE_TILT = [-2.5, 1.8, -1.2, 2.6, 1.4, -2.2, 2.2, -1.6];
+
 export function Beyond() {
-  const [open, setOpen] = useState(null);
   return (
     <section className="sec" id="beyond">
       <div className="wrap">
         <SecHead
           no="09 · Beyond the resume"
           title={<>Things you won’t find <em>on my CV</em></>}
-          sub="Hover or tap a card to flip it."
         />
-        <div className="bcards">
+        <div className="stickies">
           {beyond.map((b, i) => (
-            <Rv key={b.t} delay={(i % 4) * 70}>
-              <button
-                type="button"
-                className={`bcard ${open === i ? 'flip' : ''}`}
-                onClick={() => setOpen(open === i ? null : i)}
-                aria-pressed={open === i}
-              >
-                <span className="bcard-in">
-                  <span className="bcard-face bcard-front">
-                    <span className="bcard-icon" aria-hidden="true">{b.icon}</span>
-                    <span className="bcard-t">{b.t}</span>
-                  </span>
-                  <span className="bcard-face bcard-back">
-                    <span className="bcard-t">{b.t}</span>
-                    <span className="bcard-s">{b.s}</span>
-                  </span>
-                </span>
-              </button>
+            <Rv key={b.t} delay={(i % 4) * 60}>
+              <div className="sticky" style={{ background: NOTE_COLORS[i % 8], '--tilt': `${NOTE_TILT[i % 8]}deg` }}>
+                <span className="sticky-tape" aria-hidden="true" />
+                <span className="sticky-icon" aria-hidden="true">{b.icon}</span>
+                <div className="sticky-t">{b.t}</div>
+                <div className="sticky-s">{b.s}</div>
+              </div>
             </Rv>
           ))}
         </div>

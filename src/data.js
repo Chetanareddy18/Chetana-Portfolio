@@ -561,14 +561,14 @@ export const stars = [
 ];
 
 export const beyond = [
-  { icon: '🥋', t: 'I’ve broken granite with my hands', s: 'And tiles and glass with my head. The real lesson was preparation, technique and control.' },
-  { icon: '💃', t: 'I dance', s: 'Different forms. A completely different way to express energy and emotion.' },
-  { icon: '🏏', t: 'Kabaddi & cricket', s: 'Competition, teamwork and a lot of noise.' },
-  { icon: '🏊', t: 'I swim', s: 'Confidence and control, one length at a time.' },
-  { icon: '🔭', t: 'I stare at the night sky', s: 'Astronomy has fascinated me since I was a child.' },
-  { icon: '📜', t: 'Indian mythology & the Vedas', s: 'I love asking why ideas came about, and how they meet modern science.' },
-  { icon: '🧑‍🏫', t: 'I learn by teaching', s: 'Explaining something to someone else shows me exactly what I haven’t understood yet.' },
-  { icon: '✈️', t: 'I travel', s: 'New places, new people, new questions.' },
+  { icon: '🥋', t: 'I’ve broken granite with my hands', s: 'And tiles with my head. It’s really about technique and control.' },
+  { icon: '💃', t: 'I dance', s: 'Different forms, all of them joyful.' },
+  { icon: '🏏', t: 'Kabaddi & cricket', s: 'Teamwork, and a lot of noise.' },
+  { icon: '🏊', t: 'I swim', s: 'Calm, one length at a time.' },
+  { icon: '🔭', t: 'I stare at the night sky', s: 'Astronomy since childhood.' },
+  { icon: '📜', t: 'Indian mythology & the Vedas', s: 'Asking why ideas came about.' },
+  { icon: '🧑‍🏫', t: 'I learn by teaching', s: 'Explaining shows me what I missed.' },
+  { icon: '✈️', t: 'I travel', s: 'New places, new questions.' },
 ];
 
 export const openWork = [

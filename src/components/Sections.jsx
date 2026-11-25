@@ -470,7 +470,7 @@ export function Honors() {
         />
         <Rv className="podium">
           {honors.slice(0, 3).map((h, i) => (
-            <Medal key={h.t} h={h} i={i} metal={['gold', 'gold', 'silver'][i]} party={h.big === '1st'} />
+            <Medal key={h.t} h={h} i={i} metal={['gold', 'gold', 'silver'][i]} party={h.big === '1st' || h.big === 'Gold'} />
           ))}
         </Rv>
 
@@ -600,7 +600,6 @@ export function Contact() {
       <div className="wrap">
         <footer className="foot">
           <span>© 2026 {profile.name}</span>
-          <span className="foot-love">Powered by my parents, and my loudest cheerleader, my brother Rohit 🤍</span>
           <span>Hand-built · last updated Nov 2026</span>
         </footer>
       </div>
