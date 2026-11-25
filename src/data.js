@@ -15,7 +15,7 @@ export const profile = {
 };
 
 export const now = [
-  { k: 'Now', v: 'Product & systems intern, Oronzo LLP' },
+  { k: 'Now', v: 'Founder & CEO, Oronzo LLP' },
   { k: 'Last shipped', v: 'Precedent Ops Watch, Nov 2026' },
   { k: 'Recent win', v: 'Nasiko Buildathon 2026, 1st place' },
 ];
@@ -246,7 +246,7 @@ export const projects = [
     domain: ['security', 'fullstack'],
     oneLine:
       'Turns raw SSH honeypot logs into a live attack feed, risk scores and guided incident response.',
-    metric: { n: 'Top 46', l: 'IIT Madras × BITS Pilani' },
+    metric: { n: 'Top 49', l: 'national final · IIT Madras × BITS Pilani Goa' },
     flow: [
       { t: 'Cowrie', s: 'SSH honeypot', k: 'io' },
       { t: 'Ingest', s: 'Express API', k: 'proc' },
@@ -258,7 +258,7 @@ export const projects = [
       'React dashboard and Express + MongoDB API that ingest Cowrie SSH honeypot logs: live attack feed, KPI panels, geo-IP attack map.',
       'Python pipeline labels each session by the commands the attacker ran, scores its risk, and runs an Isolation Forest pass over the scores to surface outliers.',
       'Incident engine walks analysts through the PICERL lifecycle (prepare, identify, contain, eradicate, recover, lessons).',
-      'Finalist (top 46 teams) at the Secure AI Software & Systems Hackathon 2026, IIT Madras × BITS Pilani.',
+      'National finalist (top 49 teams) at the Secure AI Software & Systems Hackathon 2026, run by IIT Madras and BITS Pilani Goa under MeitY. Travelled to Goa between two end-semester exams.',
     ],
     stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Python', 'Leaflet'],
     skills: ['react', 'node', 'mongo', 'python', 'sec', 'ts'],
@@ -407,11 +407,12 @@ export const projects = [
 
 export const experience = [
   {
-    role: 'Product Management & Systems Engineering Intern',
+    role: 'Founder & CEO',
     org: 'Oronzo LLP',
     place: 'Hyderabad',
     when: 'Apr 2026 – Present',
     points: [
+      'Founded and run Oronzo LLP, an AI-focused company, alongside a full-time degree. Own product, systems and delivery decisions.',
       'Coordinate feature releases across 5+ AI product verticals running at the same time, from development to production.',
       'Write technical designs, deployment notes and performance reports, and share status with cross-functional teams each sprint.',
     ],
@@ -424,7 +425,7 @@ export const experience = [
     points: [
       'Built a Python ICU vitals simulator (383,540 records, 500 patients, 8 scenarios), published on Kaggle with 10/10 usability and 170+ downloads.',
       'Wrote 19 SQL queries over InfluxDB for patient monitoring and discharge readiness, and showed how causal ML corrects a misleading naive comparison.',
-      'Invited back in Aug 2026 to give an orientation talk to the 33rd MHM batch at the Apollo Institute of Hospital Administration.',
+      'Returned on 20 Aug 2026 as Guest Speaker at Initium 2026, Apollo Institute of Hospital Administration: a 45-minute talk to the 33rd MHM batch.',
     ],
   },
   {
@@ -454,16 +455,14 @@ export const experience = [
 ];
 
 export const honors = [
+  { big: 'Gold', t: 'Gold Medalist · Woxsen University', s: 'Gold Medals for academic excellence, B.Tech CSE (Data Science) · CGPA 9.63 / 10', year: '2023–', tag: 'Woxsen' },
   { big: '1st', t: 'Nasiko Online Buildathon 2026', s: 'Team Compact, with Compact Tool Schemas', year: '2026', tag: 'Hackathon' },
-  { big: 'Top 46', t: 'Secure AI Software & Systems Hackathon', s: 'Finalist with HoneyCloud-X · IIT Madras × BITS Pilani', year: '2026', tag: 'Hackathon' },
-  { big: '9.63', t: 'Gold Medal for Academic Performance', s: 'CGPA 9.63 / 10, Woxsen University', year: '2023–', tag: 'Academic' },
+  { big: 'Top 49', t: 'Secure AI Software & Systems Hackathon', s: 'National finalist with HoneyCloud-X · IIT Madras × BITS Pilani Goa · MeitY', year: '2026', tag: 'Hackathon' },
   { big: 'Top 2%', t: 'NPTEL Elite, User-Centric Computing for HCI', s: 'IIT Guwahati · 87%, among 1,733 candidates', year: '', tag: 'Academic' },
-  { big: 'Talk', t: 'Invited Speaker, Apollo Institute of Hospital Administration', s: 'Orientation for the 33rd MHM batch', year: '2026', tag: 'Speaking' },
-  { big: '170+', t: 'Kaggle dataset downloads', s: 'ICU vitals simulator · 10/10 usability', year: '2026', tag: 'Open data' },
   { big: 'Top 10', t: 'Innoverse 12-Hour Hackathon', s: 'Inclusive learning tool for students with dyslexia', year: '', tag: 'Hackathon' },
   { big: 'Expo', t: 'Selected for Japan Design Expo', s: 'Represented Woxsen University', year: '', tag: 'International' },
-  { big: 'AIR 89', t: 'NASO Olympiad', s: 'State rank 31, among 2,00,000+ participants', year: '', tag: 'Olympiad' },
-  { big: '500+', t: 'Winner, Elocution Competition', s: '1st place, Quthbullapur Mandal', year: '', tag: 'Speaking' },
+  { big: 'AIR 89', t: 'NASO Olympiad', s: 'Telangana rank 31, among 2,00,000+ participants', year: '', tag: 'Olympiad' },
+  { big: '500+', t: 'Mandal Champion, Elocution', s: '1st place in an inter-school competition, Quthbullapur Mandal', year: '', tag: 'Speaking' },
   { big: 'Lead', t: 'Societal Impact Project', s: 'Set up a school library in Aroor village', year: '', tag: 'Community' },
   { big: 'Top 10', t: 'YATT, NSTSE and START Olympiads', s: 'National level', year: '', tag: 'Olympiad' },
 ];
@@ -517,3 +516,89 @@ export const archive = [
   { y: '2026', name: 'Pricing Plans UI', kind: 'web', d: 'React pricing page with monthly/yearly and USD/INR toggles, built for a front-end assignment.', s: 'React · Vite · Context API', u: gh('Dynamic-Pricing-Provider') },
   { y: '2025', name: 'OrganXchange', kind: 'web', d: 'Organ donation and transplant coordination site in 6 Indian languages: donor registration, report uploads, certificates.', s: 'HTML · CSS · JavaScript · PHP', u: null },
 ];
+
+/* ───────── Story content (from Chetana's About Me doc and Initium 2026 post) ───────── */
+
+export const fourCs = [
+  { k: 'Curiosity', line: 'Ask better questions.', sub: 'The root of everything.' },
+  { k: 'Clarity', line: 'Know what you want to build, and why.', sub: 'Curiosity needs direction.' },
+  { k: 'Confidence', line: 'Not knowing everything. Believing you’ll figure it out.', sub: 'Learn, adapt, figure it out.' },
+  { k: 'Consistency', line: 'Showing up. Especially on the hard days.', sub: 'Turns interest into achievement.' },
+];
+export const fourRs = [
+  { k: 'Respect', line: 'Earned through integrity and capability, not a title.' },
+  { k: 'Revenue', line: 'Created by solving problems people actually have.' },
+  { k: 'Responsibility', line: 'Owning decisions, deadlines and mistakes.' },
+  { k: 'Resilience', line: 'Facing pressure without breaking.' },
+];
+
+// The polished front of the embroidery, and the tangled back that made it possible.
+export const embroideryFront = ['Gold Medalist', 'Apollo Hospitals', 'Nasiko 1st', 'Founder & CEO', 'Top 49 · IIT Madras', 'Guest Speaker'];
+export const embroideryBack = [
+  'end-sem exam → packed bags → Goa → back for the next exam',
+  'a company, internships and semesters, all at once',
+  '120+ competitive exams since childhood',
+  'rebuilding a concept until it finally clicks',
+  'starting before I felt ready',
+  'on stage, heart racing, speaking anyway',
+];
+
+// Before the code: a constellation of milestones.
+export const stars = [
+  { x: 60, y: 300, when: 'LKG', t: 'Joined AMAL', s: 'Structured learning, before formal school had even started.' },
+  { x: 140, y: 205, when: 'Kindergarten', t: 'Math showcase on my father’s birthday', s: 'Competing with participants two and three times my age, in front of 10–15 media channels.' },
+  { x: 230, y: 250, when: 'Age 10', t: 'Abacus graduation', s: 'Years of mental arithmetic: speed, focus and concentration.' },
+  { x: 300, y: 140, when: 'School', t: 'South India Karate Meet', s: 'Part of a Guinness World Record attempt, hundreds performing the first kata together.' },
+  { x: 390, y: 200, when: 'School', t: '120+ competitive exams', s: 'Not for marks. To test myself and see where I stood.' },
+  { x: 455, y: 95, when: 'School', t: 'NASO Olympiad, AIR 89', s: 'Telangana rank 31, among 2,00,000+ participants.' },
+  { x: 540, y: 170, when: 'School', t: 'Mandal Champion, elocution', s: 'Where I learnt to think on my feet in front of a crowd.' },
+  { x: 620, y: 270, when: '2023', t: 'Woxsen University', s: 'B.Tech CSE (Data Science). Gold Medals for academic excellence, CGPA 9.63.' },
+  { x: 700, y: 180, when: 'Apr 2026', t: 'Apollo Hospitals', s: 'AI/ML and data engineering intern, working on ICU data.' },
+  { x: 760, y: 300, when: '2026', t: 'Founder & CEO, Oronzo LLP', s: 'Building a company while studying. Accountability becomes personal.' },
+  { x: 835, y: 215, when: '2026', t: 'Top 49 nationally', s: 'IIT Madras × BITS Pilani Goa, under MeitY. Attended between two end-semester exams.' },
+  { x: 885, y: 110, when: 'Aug 2026', t: 'Guest Speaker, Initium 2026', s: '45 minutes on the back of the embroidery, to the 33rd MHM batch.' },
+  { x: 950, y: 60, when: 'Oct 2026', t: 'Nasiko Buildathon, 1st place', s: 'Team Compact. And I’m just getting started.' },
+];
+
+export const beyond = [
+  { icon: '🥋', t: 'I’ve broken granite with my hands', s: 'And tiles and glass with my head. The real lesson was preparation, technique and control.' },
+  { icon: '💃', t: 'I dance', s: 'Different forms. A completely different way to express energy and emotion.' },
+  { icon: '🏏', t: 'Kabaddi & cricket', s: 'Competition, teamwork and a lot of noise.' },
+  { icon: '🏊', t: 'I swim', s: 'Confidence and control, one length at a time.' },
+  { icon: '🔭', t: 'I stare at the night sky', s: 'Astronomy has fascinated me since I was a child.' },
+  { icon: '📜', t: 'Indian mythology & the Vedas', s: 'I love asking why ideas came about, and how they meet modern science.' },
+  { icon: '🧑‍🏫', t: 'I learn by teaching', s: 'Explaining something to someone else shows me exactly what I haven’t understood yet.' },
+  { icon: '✈️', t: 'I travel', s: 'New places, new people, new questions.' },
+];
+
+export const openWork = [
+  {
+    kind: 'Open data', where: 'Kaggle', icon: '📊',
+    t: 'ICU Patient Vitals Monitoring Dataset',
+    s: '383,540 simulated vital-sign records for 500 ICU patients across 8 clinical scenarios.',
+    stat: '10/10 usability · 170+ downloads',
+    u: 'https://www.kaggle.com/datasets/pallachetanareddy/icu-patient-vitals-monitoring-dataset',
+  },
+  {
+    kind: 'Open source', where: 'GitHub', icon: '🔧',
+    t: 'Compact Tool Schemas for Nasiko',
+    s: 'Contribution to an open-source AI-agent runtime that cut tool-definition tokens by 57%. Our 1st-place Buildathon entry.',
+    stat: 'PR #232 · Nasiko-Labs/nasiko',
+    u: 'https://github.com/Nasiko-Labs/nasiko/pull/232',
+  },
+  {
+    kind: 'Writing', where: 'Medium', icon: '✍️',
+    t: 'Metacognition is the AI skill nobody is putting on their resume. They should be.',
+    s: 'Why metacognition, knowing how you think and learn, deserves a place on your resume.',
+    stat: 'Article on Medium',
+    u: 'https://medium.com/@pallachetana/metacognition-is-the-ai-skill-nobody-is-putting-on-their-resume-they-should-be-50dc1692e50c',
+  },
+];
+
+export const talk = {
+  quote: 'Pressure is a privilege. Your comfort zone is beautiful, but nothing grows there.',
+  event: 'Initium 2026 · Stories That Spark Change',
+  where: 'Apollo Institute of Hospital Administration',
+  when: '20 Aug 2026',
+  what: 'A 45-minute talk to the 33rd batch of MHM students on the front and back of an embroidery, and the 4Cs.',
+};

@@ -3,17 +3,19 @@ import me from '../me.jpeg';
 import Schematic from './Schematic';
 import { Rv, SecHead, Icon, copyText, useTilt } from './ui';
 import { CountUp, Medal, CertRing } from './Wow';
+import { TalkSpotlight, ContactForm } from './Story';
 import {
   profile, now, bigNumbers, domains, projects, skillGroups, experience, honors, certs, archive,
 } from '../data';
 
 /* ───────────── Nav ───────────── */
 const LINKS = [
+  ['fourcs', '4Cs'],
   ['experience', 'Experience'],
   ['work', 'Projects'],
   ['proof', 'Skills'],
   ['honors', 'Achievements'],
-  ['archive', 'More projects'],
+  ['story', 'My story'],
   ['contact', 'Contact'],
 ];
 
@@ -86,7 +88,7 @@ export function Hero() {
               <span className="l2"><em>Chetana</em> Reddy<span className="dot">.</span></span>
             </Rv>
             <Rv as="p" className="lede" delay={140}>
-              I build AI systems that <u>show their work</u>: agents that cite their evidence, models measured against honest baselines, and tools that keep an audit trail.
+              I don’t chase outcomes. <u>I build habits.</u> <span className="lede-sub">When interest drives you, you don’t calculate the cost. You just go.</span>
             </Rv>
             <Rv as="ul" className="spec" delay={200}>
               <li>{profile.role}</li>
@@ -288,7 +290,7 @@ export function CaseFiles({ openId, setOpenId }) {
     <section className="sec" id="work">
       <div className="wrap">
         <SecHead
-          no="02 · Projects"
+          no="03 · Projects"
           title={<>Selected <em>projects</em></>}
           sub="Twelve projects, each drawn as the pipeline it actually runs. Open one for what I built, the numbers, and where they come from."
         />
@@ -321,7 +323,7 @@ export function Experience() {
     <section className="sec" id="experience">
       <div className="wrap">
         <SecHead
-          no="01 · Experience"
+          no="02 · Experience"
           title={<>Where I’ve <em>worked</em></>}
           sub="Internships, newest first."
         />
@@ -404,7 +406,7 @@ export function Skills() {
     <section className="sec" id="proof">
       <div className="wrap">
         <SecHead
-          no="03 · Skills"
+          no="05 · Skills"
           title={<>My <em>toolkit</em></>}
           sub={`${total} skills across ${skillGroups.length} areas, laid out like a periodic table. ★ marks the ones I use every day. Hover or tap a tile to flip it.`}
         />
@@ -461,15 +463,18 @@ export function Honors() {
     <section className="sec" id="honors">
       <div className="wrap">
         <SecHead
-          no="04 · Achievements"
+          no="06 · Achievements"
           title={<>Wins &amp; <em>recognition</em></>}
           sub="Hackathons, academics and a few things from school that I’m still proud of."
         />
         <Rv className="podium">
           {honors.slice(0, 3).map((h, i) => (
-            <Medal key={h.t} h={h} i={i} metal={['gold', 'silver', 'gold'][i]} party={i === 0} />
+            <Medal key={h.t} h={h} i={i} metal={['gold', 'gold', 'silver'][i]} party={h.big === '1st'} />
           ))}
         </Rv>
+
+        <TalkSpotlight />
+
 
         <div className="honors deal">
           {honors.slice(3).map((h, i) => (
@@ -512,7 +517,7 @@ export function Archive() {
     <section className="sec" id="archive">
       <div className="wrap">
         <SecHead
-          no="05 · More projects"
+          no="10 · More projects"
           title={<>More <em>projects</em></>}
           sub="Coursework, early experiments and side projects. Smaller, but this is where most of the learning happened."
         />
@@ -561,13 +566,14 @@ export function Contact() {
         <Rv>
         <Postcard>
           <div className="pc-left">
-            <div className="sec-no">06 · Contact</div>
+            <div className="sec-no">11 · Contact</div>
             <h2>Let’s build <em>something</em> worth checking.</h2>
-            <p>Open to AI, ML and data engineering roles. If you have a hard problem with messy data, or an agent that needs to prove its answers, I’d like to hear about it.</p>
+            <p>Open to AI, ML, data and product roles, collaborations and speaking. Write to me directly, or leave a note below and it lands in my inbox.</p>
             <div className="mail">
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
               <button className="copy" onClick={() => copyText(profile.email)}>Copy</button>
             </div>
+            <ContactForm />
           </div>
           <div className="pc-right">
             <div className="pc-lines">
@@ -593,7 +599,8 @@ export function Contact() {
       <div className="wrap">
         <footer className="foot">
           <span>© 2026 {profile.name}</span>
-          <span>Set in Fraunces &amp; IBM Plex · hand-built, last updated Nov 2026</span>
+          <span className="foot-love">Powered by my parents, and my loudest cheerleader, my brother Rohit 🤍</span>
+          <span>Hand-built · last updated Nov 2026</span>
         </footer>
       </div>
     </section>
