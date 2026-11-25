@@ -1,16 +1,23 @@
-# React + Vite
+# Field Notes · Palla Chetana Reddy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio, live at https://palla-chetana-reddy.netlify.app
 
-Currently, two official plugins are available:
+An engineering-logbook design: every project is a "case file" with its pipeline drawn as a schematic, the career is a metro line, and skills are shown as a proof matrix that links each skill to the projects that use it.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Run locally
 
-## React Compiler
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # outputs dist/
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Editing content
 
-## Expanding the ESLint configuration
+All content lives in `src/data.js`: profile, case files (`projects`), journey, experience, honors, certifications and the archive. Each project's `flow` array draws its schematic (5 steps; `k` is `io`, `proc`, `store` or `guard`), and its `skills` array fills the proof matrix.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Rule for this site: every number must come from a repo, README, test run or verified document.
+
+## Stack
+
+React 18 + Vite, hand-written CSS (no UI framework), Fraunces, IBM Plex Sans/Mono and Caveat from Google Fonts. Light and dark themes follow the system setting, with a manual toggle.
