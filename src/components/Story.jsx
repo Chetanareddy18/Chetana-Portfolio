@@ -6,68 +6,103 @@ import { confetti } from './Wow';
 import { EMAILJS } from '../contact.config';
 import { fourCs, fourRs, embroideryFront, embroideryBack, stars, beyond, openWork, talk, profile } from '../data';
 
-/* ───────────── 4Cs → 4Rs ───────────── */
+/* ───────────── 4Cs → 4Rs: a growing tree ───────────── */
+// Roots (the 4Cs) are built underground; the blossoms (the 4Rs) grow from them.
+const ROOT_TIPS = [[150, 540], [380, 600], [620, 540], [850, 600]];
+const BLOOMS = [[180, 210], [385, 90], [615, 90], [820, 210]];
+const GROUND = 370;
+const PETAL_COLORS = ['#ff7a3d', '#e9b949', '#ff9bb3', '#86abe0'];
+
+function rootPath([x, y], i) {
+  const bend = i % 2 ? 60 : -60;
+  return `M500 ${GROUND} C ${500 + (x - 500) * 0.15} ${GROUND + 70}, ${x + bend} ${y - 120}, ${x} ${y}`;
+}
+function branchPts([x, y]) {
+  return [[500, 240], [500 + (x - 500) * 0.35, 205], [x + (x < 500 ? 40 : -40), y + 60], [x, y]];
+}
+function branchPath(b) {
+  const [p0, p1, p2, p3] = branchPts(b);
+  return `M${p0[0]} ${p0[1]} C ${p1[0]} ${p1[1]}, ${p2[0]} ${p2[1]}, ${p3[0]} ${p3[1]}`;
+}
+function bez(t, [p0, p1, p2, p3]) {
+  const u = 1 - t;
+  const pt = (k) => u * u * u * p0[k] + 3 * u * u * t * p1[k] + 3 * u * t * t * p2[k] + t * t * t * p3[k];
+  const d = (k) => 3 * u * u * (p1[k] - p0[k]) + 6 * u * t * (p2[k] - p1[k]) + 3 * t * t * (p3[k] - p2[k]);
+  return { x: pt(0), y: pt(1), a: (Math.atan2(d(1), d(0)) * 180) / Math.PI };
+}
+const LEAVES = BLOOMS.flatMap((b, i) => [0.42, 0.68].map((t, j) => {
+  const { x, y, a } = bez(t, branchPts(b));
+  return { x, y, a: a + (j ? -35 : 35), side: j ? -1 : 1, k: i * 2 + j };
+}));
+
 export function FourCs() {
   const [hot, setHot] = useState(null);
-  // Every C feeds every R, like threads woven across a loom.
-  const threads = [];
-  for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) threads.push({ c, r });
-  const y = (i) => 12.5 + i * 25;
-
   return (
     <section className="sec" id="fourcs">
       <div className="wrap">
         <SecHead
           no="01 · How I work"
           title={<>The <em>4Cs</em> → 4Rs</>}
-          sub="A framework I built from my own life. I don’t chase outcomes. I build habits, and the outcomes follow."
+          sub="Roots I build every day. What grows from them follows naturally."
         />
-        <Rv className="loom">
-          <div className="loom-col">
-            {fourCs.map((c, i) => (
-              <div
-                key={c.k}
-                className={`cc ${hot === i ? 'hot' : ''}`}
-                onMouseEnter={() => setHot(i)}
-                onMouseLeave={() => setHot(null)}
-                onFocus={() => setHot(i)}
-                onBlur={() => setHot(null)}
-                tabIndex={0}
-              >
-                <span className="cc-letter">C</span>
-                <div>
-                  <div className="cc-k">{c.k}</div>
-                  <div className="cc-line">{c.line}</div>
-                </div>
-              </div>
+        <Rv className={`tree ${hot !== null ? 'feeding' : ''}`}>
+          <svg className="tree-svg" viewBox="0 0 1000 640" aria-hidden="true">
+            <defs>
+              <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#7a5634" />
+                <stop offset="1" stopColor="#3b2818" />
+              </linearGradient>
+              <radialGradient id="glow" cx="50%" cy="0%" r="70%">
+                <stop offset="0" stopColor="#ffb27a" stopOpacity=".35" />
+                <stop offset="1" stopColor="#ffb27a" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            <rect x="0" y={GROUND} width="1000" height={640 - GROUND} rx="18" fill="url(#soil)" />
+            <rect x="0" y={GROUND} width="1000" height="160" fill="url(#glow)" />
+            <path d={`M0 ${GROUND} Q 250 ${GROUND - 10} 500 ${GROUND} T 1000 ${GROUND}`} className="grass" />
+            {ROOT_TIPS.map((p, i) => (
+              <path key={i} d={rootPath(p, i)} className={`root ${hot === i ? 'on' : ''}`} style={{ '--i': i }} />
             ))}
-          </div>
-
-          <svg className="loom-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            {threads.map(({ c, r }, i) => (
-              <path
-                key={i}
-                className={`thread ${hot === null ? '' : hot === c ? 'on' : 'off'}`}
-                style={{ '--i': i }}
-                d={`M0 ${y(c)} C 45 ${y(c)}, 55 ${y(r)}, 100 ${y(r)}`}
-                vectorEffect="non-scaling-stroke"
-              />
+            <path d={`M488 ${GROUND + 4} C 492 320, 494 280, 492 240 L 508 240 C 506 280, 508 320, 512 ${GROUND + 4} Z`} className="trunk" />
+            {BLOOMS.map((p, i) => (
+              <path key={i} d={branchPath(p)} className="branch" style={{ '--i': i }} />
+            ))}
+            {LEAVES.map((l) => (
+              <ellipse key={l.k} cx={l.x} cy={l.y - 9 * l.side} rx="15" ry="6.5" transform={`rotate(${l.a} ${l.x} ${l.y - 9 * l.side})`} className="leaf" style={{ '--i': l.k }} />
+            ))}
+            {BLOOMS.map(([x, y], i) => (
+              <g key={i} className="bloom" style={{ '--i': i, transformOrigin: `${x}px ${y}px` }}>
+                {[0, 72, 144, 216, 288].map((a) => (
+                  <ellipse key={a} cx={x} cy={y - 22} rx="15" ry="24" fill={PETAL_COLORS[i]} transform={`rotate(${a} ${x} ${y})`} />
+                ))}
+                <circle cx={x} cy={y} r="17" className="bloom-core" />
+                <text x={x} y={y + 7} textAnchor="middle" className="bloom-r">R</text>
+              </g>
             ))}
           </svg>
 
-          <div className="loom-arrow" aria-hidden="true">leads to ↓</div>
-
-          <div className="loom-col">
-            {fourRs.map((r) => (
-              <div key={r.k} className={`rr ${hot !== null ? 'lit' : ''}`}>
-                <span className="rr-letter">R</span>
-                <div>
-                  <div className="rr-k">{r.k}</div>
-                  <div className="rr-line">{r.line}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {BLOOMS.map(([x, y], i) => (
+            <div key={fourRs[i].k} className="tree-r" style={{ left: `${x / 10}%`, top: `${((i === 1 || i === 2 ? y - 78 : y + 44) / 640) * 100}%`, '--c': PETAL_COLORS[i], '--i': i }}>
+              {fourRs[i].k}
+            </div>
+          ))}
+          {ROOT_TIPS.map(([x, y], i) => (
+            <button
+              type="button"
+              key={fourCs[i].k}
+              className={`tree-c ${hot === i ? 'on' : ''}`}
+              style={{ left: `${x / 10}%`, top: `${(y / 640) * 100}%`, '--i': i }}
+              onMouseEnter={() => setHot(i)}
+              onMouseLeave={() => setHot(null)}
+              onFocus={() => setHot(i)}
+              onBlur={() => setHot(null)}
+              onClick={() => setHot(hot === i ? null : i)}
+            >
+              <span className="tree-c-l">C</span>{fourCs[i].k}
+            </button>
+          ))}
+          <span className="tree-tag tree-tag-up">What follows</span>
+          <span className="tree-tag tree-tag-down">What I build</span>
         </Rv>
         <Rv as="p" className="loom-foot">
           Build the 4Cs, and the 4Rs follow. <em>Earned.</em>
