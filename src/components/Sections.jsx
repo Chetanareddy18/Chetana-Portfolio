@@ -264,10 +264,10 @@ function Polaroid() {
       <div className="pol-back" aria-hidden={!flip}>
         <span className="tape" aria-hidden="true" />
         <p className="pol-note">
-          Hi, you found the back! 🌸<br />
-          I started learning before I started school, and I never stopped.
-          I stay curious, keep things clear, back myself, and show up on the hard days.
-          Say hi:<br />
+          I’m still learning.<br />
+          Still building.<br />
+          Still curious about what comes next.<br /><br />
+          And I’m just getting started. 🤍<br /><br />
           <b>{profile.email}</b>
         </p>
         <span className="pol-sign">— Chetana</span>
