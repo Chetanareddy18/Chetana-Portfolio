@@ -26,10 +26,13 @@ export function Nav() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     const io = new IntersectionObserver(
-      (es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      (es) => es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        setActive(e.target.id === 'top' ? '' : e.target.id);
+      }),
       { rootMargin: '-45% 0px -50% 0px' }
     );
-    LINKS.forEach(([id]) => { const el = document.getElementById(id); if (el) io.observe(el); });
+    ['top', ...LINKS.map(([id]) => id)].forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
     return () => { window.removeEventListener('scroll', onScroll); io.disconnect(); };
   }, []);
 
@@ -46,7 +49,7 @@ export function Nav() {
       <div className="wrap nav-in">
         <a className="mark" href="#top" aria-label="Back to top">
           <span className="mark-logo">c</span>
-          <span className="mark-name">Chetana · Field Notes</span>
+          <span className="mark-name">Palla Chetana Reddy</span>
         </a>
         <ul className="nav-links">
           {LINKS.map(([id, l]) => (
@@ -71,7 +74,7 @@ export function Hero() {
         <div className="hero-grid">
           <div>
             <Rv className="kicker">
-              <span>Field notes</span><span>Vol. 2026</span><span>{profile.location}</span>
+              <span>{profile.role}</span><span>{profile.location}</span><span className="kicker-open"><span className="pulse" /> Open to roles</span>
             </Rv>
             <Rv as="h1" delay={60}>
               <span className="l1">Palla</span>
@@ -513,7 +516,7 @@ export function Contact() {
               <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" strokeWidth="2" />
               <circle cx="60" cy="60" r="34" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 3" />
               <text fontFamily="IBM Plex Mono, monospace" fontSize="10" letterSpacing="3" fill="currentColor">
-                <textPath href="#pm-c">HYDERABAD · INDIA · FIELD NOTES ·</textPath>
+                <textPath href="#pm-c">HYDERABAD · INDIA · OPEN TO ROLES ·</textPath>
               </text>
               <text x="60" y="58" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontSize="20" fill="currentColor">2026</text>
               <text x="60" y="74" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontSize="8" letterSpacing="2" fill="currentColor">POSTED</text>

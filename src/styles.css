@@ -146,7 +146,9 @@ section { position: relative; }
   font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 26px;
 }
-.kicker span + span::before { content: '/'; margin-right: 14px; color: var(--rule); }
+.kicker > span + span::before { content: '/'; margin-right: 14px; color: var(--rule); }
+.kicker-open { display: inline-flex; align-items: center; gap: 8px; color: var(--green); }
+.kicker-open .pulse::before { content: none; }
 .hero h1 {
   font-family: var(--serif); font-weight: 350; margin: 0;
   font-size: clamp(54px, 11vw, 128px); line-height: .9; letter-spacing: -0.035em;
