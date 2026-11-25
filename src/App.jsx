@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Nav, Hero, Band, CaseFiles, Experience, Proof, Honors, Archive, Contact } from './components/Sections';
+import { Nav, Hero, Band, CaseFiles, Experience, Skills, Honors, Archive, Contact } from './components/Sections';
 
 export default function App() {
   const [openId, setOpenId] = useState(null);
@@ -11,7 +11,7 @@ export default function App() {
         <Experience />
         <Band />
         <CaseFiles openId={openId} setOpenId={setOpenId} />
-        <Proof setOpenId={setOpenId} />
+        <Skills />
         <Honors />
         <Archive />
         <Contact />

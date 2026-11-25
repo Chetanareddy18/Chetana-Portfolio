@@ -37,6 +37,19 @@ export const domains = [
   { id: 'fullstack', label: 'Full-stack' },
 ];
 
+// Skills section: a keyboard. `h: true` = home-row bump (daily drivers).
+export const keyboard = [
+  { cat: 'Languages', keys: [{ k: 'Python', h: true }, { k: 'SQL', h: true }, { k: 'TypeScript' }, { k: 'JavaScript' }, { k: 'Java' }] },
+  { cat: 'Machine learning', keys: [{ k: 'scikit-learn', h: true }, { k: 'Classification' }, { k: 'Regression' }, { k: 'Anomaly detection' }, { k: 'Forecasting' }, { k: 'Prophet' }, { k: 'Causal inference' }, { k: 'Feature engineering' }, { k: 'Model evaluation' }, { k: 'Reinforcement learning' }] },
+  { cat: 'GenAI', keys: [{ k: 'LLMs' }, { k: 'LangGraph', h: true }, { k: 'RAG', h: true }, { k: 'Embeddings' }, { k: 'FAISS' }, { k: 'Pinecone' }, { k: 'Prompt engineering' }, { k: 'LLM evaluation' }] },
+  { cat: 'Data', keys: [{ k: 'pandas', h: true }, { k: 'NumPy' }, { k: 'ETL' }, { k: 'Data quality checks' }, { k: 'Star schema' }, { k: 'Power BI' }, { k: 'Matplotlib' }, { k: 'Plotly' }] },
+  { cat: 'Backend & web', keys: [{ k: 'FastAPI', h: true }, { k: 'REST APIs' }, { k: 'Node.js' }, { k: 'Express' }, { k: 'React' }, { k: 'Streamlit' }, { k: 'Socket.IO' }] },
+  { cat: 'Databases', keys: [{ k: 'PostgreSQL' }, { k: 'MySQL' }, { k: 'SQLite' }, { k: 'DuckDB' }, { k: 'MongoDB' }, { k: 'InfluxDB' }] },
+  { cat: 'Ship it', keys: [{ k: 'Docker', h: true }, { k: 'Docker Compose' }, { k: 'GitHub Actions' }, { k: 'pytest' }, { k: 'Git' }, { k: 'Claude Code' }] },
+  { cat: 'Security', keys: [{ k: 'JWT auth' }, { k: 'Hashing' }, { k: 'PII redaction' }, { k: 'Rate limiting' }, { k: 'GDPR' }, { k: 'DPDP Act' }, { k: 'ISO 27001' }] },
+];
+export const spacebar = 'Communication · Documentation · Teamwork · Stakeholder updates';
+
 // Skill keys used by the proof matrix
 export const skills = [
   { id: 'python', label: 'Python', group: 'Languages' },

@@ -3,7 +3,7 @@ import me from '../me.jpeg';
 import Schematic from './Schematic';
 import { Rv, SecHead, Icon, copyText } from './ui';
 import {
-  profile, now, bigNumbers, domains, projects, skills, experience, honors, certs, archive,
+  profile, now, bigNumbers, domains, projects, keyboard, spacebar, experience, honors, certs, archive,
 } from '../data';
 
 /* ───────────── Nav ───────────── */
@@ -312,87 +312,70 @@ export function Experience() {
   );
 }
 
-/* ───────────── Proof matrix ───────────── */
-export function Proof({ setOpenId }) {
-  const [hl, setHl] = useState(null);
-  const groups = useMemo(() => {
-    const g = [];
-    skills.forEach((s) => {
-      let grp = g.find((x) => x.name === s.group);
-      if (!grp) { grp = { name: s.group, items: [] }; g.push(grp); }
-      grp.items.push(s);
-    });
-    return g;
-  }, []);
+/* ───────────── Skills (keyboard) ───────────── */
+export function Skills() {
+  const [typed, setTyped] = useState([]);
+  const [down, setDown] = useState(null);
+  const total = keyboard.reduce((n, r) => n + r.keys.length, 0);
+
+  const press = (label) => {
+    setDown(label);
+    setTimeout(() => setDown((d) => (d === label ? null : d)), 160);
+    setTyped((t) => [...t, label.toLowerCase().replace(/\s+/g, '-')].slice(-6));
+  };
 
   return (
     <section className="sec" id="proof">
       <div className="wrap">
         <SecHead
           no="03 · Skills"
-          title={<>Skills, <em>with receipts</em></>}
-          sub="No skill bars, no percentages. Each skill links to the projects where I used it. Click a project name to open its file."
+          title={<>My <em>toolkit</em></>}
+          sub="The keys I type with every day. Go on, press a few."
         />
-        <Rv className="matrix-wrap">
-          <table className="matrix">
-            <thead>
-              <tr>
-                <th className="sk" style={{ verticalAlign: 'bottom', fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--ink-3)', letterSpacing: '.12em', textTransform: 'uppercase' }}>
-                  Skill ↓ / Project →
-                </th>
-                {projects.map((p) => (
-                  <th key={p.id} className={hl === p.id ? 'hl' : ''} onMouseEnter={() => setHl(p.id)} onMouseLeave={() => setHl(null)}>
-                    <button onClick={() => setOpenId(p.id)} onFocus={() => setHl(p.id)} onBlur={() => setHl(null)}>{p.title}</button>
-                  </th>
-                ))}
-                <th style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--ink-3)' }}>Uses</th>
-              </tr>
-            </thead>
-            <tbody>
-              {groups.map((g) => (
-                <FragmentRows key={g.name} g={g} hl={hl} setHl={setHl} />
-              ))}
-            </tbody>
-          </table>
-        </Rv>
-        <div className="matrix-note">
-          <span>{skills.length} skills · {projects.length} projects</span>
-          <span className="hide-sm">Scroll sideways on small screens →</span>
-        </div>
-        <Rv className="also">
-          <div><h4>Also comfortable with</h4><p>pandas, NumPy, Matplotlib, Streamlit, Pydantic, Socket.IO, Git</p></div>
-          <div><h4>Foundations</h4><p>Statistics, probability, linear algebra, data structures, OOP, Java</p></div>
-          <div><h4>Knowledge areas</h4><p>GDPR, DPDP Act, ISO 27001, ITIL incident and SLA practice</p></div>
+        <Rv className="kb-shell">
+          <div className="kb-screen" aria-live="polite">
+            <span className="kb-prompt">chetana@portfolio:~$</span>{' '}
+            {typed.length === 0
+              ? <span className="kb-hint">click any key below</span>
+              : <span>{typed.join(' ')}</span>}
+            <span className="kb-cursor" aria-hidden="true" />
+            {typed.length > 0 && (
+              <button className="kb-clear" onClick={() => setTyped([])} aria-label="Clear typed skills">clear</button>
+            )}
+          </div>
+
+          <div className="kb">
+            {keyboard.map((row) => (
+              <div className="kb-row" key={row.cat}>
+                <div className="key mod" aria-hidden="true">{row.cat}</div>
+                <div className="kb-keys">
+                  {row.keys.map((k) => (
+                    <button
+                      key={k.k}
+                      className={`key ${k.h ? 'home' : ''} ${down === k.k ? 'down' : ''}`}
+                      onClick={() => press(k.k)}
+                    >
+                      {k.k}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="kb-row kb-space-row">
+              <div className="key mod" aria-hidden="true">Soft skills</div>
+              <button className={`key space ${down === 'space' ? 'down' : ''}`} onClick={() => { setDown('space'); setTimeout(() => setDown(null), 160); setTyped((t) => [...t, '·'].slice(-6)); }}>
+                {spacebar}
+              </button>
+            </div>
+          </div>
+
+          <div className="kb-legend">
+            <span><i className="bump" /> bump = keys I reach for daily</span>
+            <span>{total} skills · {keyboard.length} rows</span>
+          </div>
         </Rv>
       </div>
     </section>
-  );
-}
-
-function FragmentRows({ g, hl, setHl }) {
-  return (
-    <>
-      <tr className="grp"><td colSpan={projects.length + 2}>{g.name}</td></tr>
-      {g.items.map((s) => {
-        const count = projects.filter((p) => p.skills.includes(s.id)).length;
-        return (
-          <tr className="r" key={s.id}>
-            <th className="sk" scope="row">{s.label}</th>
-            {projects.map((p) => (
-              <td
-                key={p.id}
-                className={`c ${hl === p.id ? 'hl' : ''}`}
-                onMouseEnter={() => setHl(p.id)}
-                onMouseLeave={() => setHl(null)}
-              >
-                {p.skills.includes(s.id) ? <span className="dot" title={`${s.label} in ${p.title}`} /> : null}
-              </td>
-            ))}
-            <td className="cnt">×{count}</td>
-          </tr>
-        );
-      })}
-    </>
   );
 }
 
