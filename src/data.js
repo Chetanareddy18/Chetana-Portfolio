@@ -37,18 +37,18 @@ export const domains = [
   { id: 'fullstack', label: 'Full-stack' },
 ];
 
-// Skills section: a keyboard. `h: true` = home-row bump (daily drivers).
-export const keyboard = [
-  { cat: 'Languages', keys: [{ k: 'Python', h: true }, { k: 'SQL', h: true }, { k: 'TypeScript' }, { k: 'JavaScript' }, { k: 'Java' }] },
-  { cat: 'Machine learning', keys: [{ k: 'scikit-learn', h: true }, { k: 'Classification' }, { k: 'Regression' }, { k: 'Anomaly detection' }, { k: 'Forecasting' }, { k: 'Prophet' }, { k: 'Causal inference' }, { k: 'Feature engineering' }, { k: 'Model evaluation' }, { k: 'Reinforcement learning' }] },
-  { cat: 'GenAI', keys: [{ k: 'LLMs' }, { k: 'LangGraph', h: true }, { k: 'RAG', h: true }, { k: 'Embeddings' }, { k: 'FAISS' }, { k: 'Pinecone' }, { k: 'Prompt engineering' }, { k: 'LLM evaluation' }] },
-  { cat: 'Data', keys: [{ k: 'pandas', h: true }, { k: 'NumPy' }, { k: 'ETL' }, { k: 'Data quality checks' }, { k: 'Star schema' }, { k: 'Power BI' }, { k: 'Matplotlib' }, { k: 'Plotly' }] },
-  { cat: 'Backend & web', keys: [{ k: 'FastAPI', h: true }, { k: 'REST APIs' }, { k: 'Node.js' }, { k: 'Express' }, { k: 'React' }, { k: 'Streamlit' }, { k: 'Socket.IO' }] },
-  { cat: 'Databases', keys: [{ k: 'PostgreSQL' }, { k: 'MySQL' }, { k: 'SQLite' }, { k: 'DuckDB' }, { k: 'MongoDB' }, { k: 'InfluxDB' }] },
-  { cat: 'Ship it', keys: [{ k: 'Docker', h: true }, { k: 'Docker Compose' }, { k: 'GitHub Actions' }, { k: 'pytest' }, { k: 'Git' }, { k: 'Claude Code' }] },
-  { cat: 'Security', keys: [{ k: 'JWT auth' }, { k: 'Hashing' }, { k: 'PII redaction' }, { k: 'Rate limiting' }, { k: 'GDPR' }, { k: 'DPDP Act' }, { k: 'ISO 27001' }] },
+// Skills section. Each skill: [name, symbol for the periodic table, strongest? (★)].
+// `col` = periodic-table tile colour, `note` = sticky-note colour.
+export const skillGroups = [
+  { cat: 'Languages', col: '#f4c7a1', note: '#fff3a8', skills: [['Python', 'Py', 1], ['SQL', 'Sq', 1], ['TypeScript', 'Ts'], ['JavaScript', 'Js'], ['Java', 'Jv']] },
+  { cat: 'Machine learning', col: '#c9dbf0', note: '#ffd6e0', skills: [['scikit-learn', 'Sk', 1], ['Classification', 'Cl'], ['Regression', 'Rg'], ['Anomaly detection', 'Ad'], ['Forecasting', 'Fc'], ['Causal inference', 'Ci'], ['Feature engineering', 'Fe'], ['Reinforcement learning', 'Rl']] },
+  { cat: 'GenAI', col: '#e3d2f0', note: '#c8f0d8', skills: [['LLMs', 'Lm'], ['LangGraph', 'Lg', 1], ['RAG', 'Rag', 1], ['Embeddings', 'Em'], ['FAISS', 'Fs'], ['Pinecone', 'Pc'], ['Prompt engineering', 'Pe'], ['LLM evaluation', 'Ev']] },
+  { cat: 'Data', col: '#cfe8d6', note: '#cfe3ff', skills: [['pandas', 'Pd', 1], ['NumPy', 'Np'], ['ETL', 'Et'], ['Data quality', 'Dq'], ['Star schema', 'Ss'], ['Power BI', 'Bi'], ['Matplotlib', 'Mp']] },
+  { cat: 'Backend & web', col: '#f6dfa8', note: '#ffe0b8', skills: [['FastAPI', 'Fa', 1], ['REST APIs', 'Api'], ['Node.js', 'No'], ['Express', 'Ex'], ['React', 'Re'], ['Streamlit', 'St']] },
+  { cat: 'Databases', col: '#d6e3e8', note: '#e6d9ff', skills: [['PostgreSQL', 'Pg'], ['MySQL', 'My'], ['SQLite', 'Sl'], ['DuckDB', 'Dk'], ['MongoDB', 'Mo'], ['InfluxDB', 'In']] },
+  { cat: 'Ship it', col: '#f3cfcf', note: '#fff3a8', skills: [['Docker', 'Do', 1], ['GitHub Actions', 'Ga'], ['pytest', 'Pt'], ['Git', 'Gt'], ['Claude Code', 'Cc']] },
+  { cat: 'Security', col: '#e2ddd2', note: '#d8f3f0', skills: [['JWT auth', 'Jw'], ['PII redaction', 'Pi'], ['Rate limiting', 'Rt'], ['GDPR', 'Gd'], ['DPDP Act', 'Dp'], ['ISO 27001', 'Iso']] },
 ];
-export const spacebar = 'Communication · Documentation · Teamwork · Stakeholder updates';
 
 // Skill keys used by the proof matrix
 export const skills = [

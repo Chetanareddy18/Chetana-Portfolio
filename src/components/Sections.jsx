@@ -3,7 +3,7 @@ import me from '../me.jpeg';
 import Schematic from './Schematic';
 import { Rv, SecHead, Icon, copyText } from './ui';
 import {
-  profile, now, bigNumbers, domains, projects, keyboard, spacebar, experience, honors, certs, archive,
+  profile, now, bigNumbers, domains, projects, skillGroups, experience, honors, certs, archive,
 } from '../data';
 
 /* ───────────── Nav ───────────── */
@@ -312,17 +312,14 @@ export function Experience() {
   );
 }
 
-/* ───────────── Skills (keyboard) ───────────── */
-export function Skills() {
-  const [typed, setTyped] = useState([]);
-  const [down, setDown] = useState(null);
-  const total = keyboard.reduce((n, r) => n + r.keys.length, 0);
+/* ───────────── Skills (periodic table / sticky notes) ───────────── */
+const NOTE_TILT = [-3, 2, -1.5, 3, -2, 1.5, -2.5, 2];
 
-  const press = (label) => {
-    setDown(label);
-    setTimeout(() => setDown((d) => (d === label ? null : d)), 160);
-    setTyped((t) => [...t, label.toLowerCase().replace(/\s+/g, '-')].slice(-6));
-  };
+export function Skills() {
+  const [view, setView] = useState('table');
+  const [focus, setFocus] = useState(null);
+  const total = skillGroups.reduce((n, g) => n + g.skills.length, 0);
+  let no = 0;
 
   return (
     <section className="sec" id="proof">
@@ -330,50 +327,59 @@ export function Skills() {
         <SecHead
           no="03 · Skills"
           title={<>My <em>toolkit</em></>}
-          sub="The keys I type with every day. Go on, press a few."
+          sub={`${total} skills across ${skillGroups.length} areas. ★ marks the ones I use every day.`}
         />
-        <Rv className="kb-shell">
-          <div className="kb-screen" aria-live="polite">
-            <span className="kb-prompt">chetana@portfolio:~$</span>{' '}
-            {typed.length === 0
-              ? <span className="kb-hint">click any key below</span>
-              : <span>{typed.join(' ')}</span>}
-            <span className="kb-cursor" aria-hidden="true" />
-            {typed.length > 0 && (
-              <button className="kb-clear" onClick={() => setTyped([])} aria-label="Clear typed skills">clear</button>
-            )}
-          </div>
 
-          <div className="kb">
-            {keyboard.map((row) => (
-              <div className="kb-row" key={row.cat}>
-                <div className="key mod" aria-hidden="true">{row.cat}</div>
-                <div className="kb-keys">
-                  {row.keys.map((k) => (
-                    <button
-                      key={k.k}
-                      className={`key ${k.h ? 'home' : ''} ${down === k.k ? 'down' : ''}`}
-                      onClick={() => press(k.k)}
-                    >
-                      {k.k}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div className="kb-row kb-space-row">
-              <div className="key mod" aria-hidden="true">Soft skills</div>
-              <button className={`key space ${down === 'space' ? 'down' : ''}`} onClick={() => { setDown('space'); setTimeout(() => setDown(null), 160); setTyped((t) => [...t, '·'].slice(-6)); }}>
-                {spacebar}
-              </button>
+        <Rv className="sk-switch" role="tablist" aria-label="Choose how to view skills">
+          <button role="tab" aria-selected={view === 'table'} className={view === 'table' ? 'on' : ''} onClick={() => setView('table')}>Periodic table</button>
+          <button role="tab" aria-selected={view === 'notes'} className={view === 'notes' ? 'on' : ''} onClick={() => setView('notes')}>Sticky notes</button>
+        </Rv>
+
+        {view === 'table' ? (
+          <div className="pt-wrap" key="table">
+            <div className="pt">
+              {skillGroups.map((g) =>
+                g.skills.map(([name, sym, top]) => {
+                  no += 1;
+                  const dim = focus && focus !== g.cat;
+                  return (
+                    <div key={name} className={`el ${dim ? 'dim' : ''}`} style={{ background: g.col }} title={`${name} · ${g.cat}`}>
+                      <div className="el-no">{no}{top ? <span className="el-star"> ★</span> : null}</div>
+                      <div className="el-sym">{sym}</div>
+                      <div className="el-nm">{name}</div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            <div className="pt-leg">
+              {skillGroups.map((g) => (
+                <button
+                  key={g.cat}
+                  className={focus === g.cat ? 'on' : ''}
+                  onClick={() => setFocus(focus === g.cat ? null : g.cat)}
+                  aria-pressed={focus === g.cat}
+                >
+                  <i style={{ background: g.col }} />{g.cat}
+                </button>
+              ))}
+              {focus && <button className="pt-reset" onClick={() => setFocus(null)}>show all</button>}
             </div>
           </div>
-
-          <div className="kb-legend">
-            <span><i className="bump" /> bump = keys I reach for daily</span>
-            <span>{total} skills · {keyboard.length} rows</span>
+        ) : (
+          <div className="board" key="notes">
+            {skillGroups.map((g, i) => (
+              <div className="note" key={g.cat} style={{ background: g.note, '--tilt': `${NOTE_TILT[i % NOTE_TILT.length]}deg` }}>
+                <h4>{g.cat}</h4>
+                <ul>
+                  {g.skills.map(([name, , top]) => (
+                    <li key={name} className={top ? 'star' : ''}>{name}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </Rv>
+        )}
       </div>
     </section>
   );
