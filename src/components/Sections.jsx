@@ -47,9 +47,13 @@ export function Nav() {
   return (
     <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="wrap nav-in">
-        <a className="mark" href="#top" aria-label="Back to top">
-          <span className="mark-logo">c</span>
-          <span className="mark-name">Palla Chetana Reddy</span>
+        <a className="mark" href="#top" aria-label="Palla Chetana Reddy, back to top">
+          <span className="sig">
+            <span className="sig-name">Chetana</span>
+            <svg className="sig-swoosh" viewBox="0 0 120 16" aria-hidden="true">
+              <path d="M3 11 C 30 4, 62 3, 92 6 S 112 9, 117 4" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+            </svg>
+          </span>
         </a>
         <ul className="nav-links">
           {LINKS.map(([id, l]) => (
