@@ -6,19 +6,33 @@ import { confetti } from './Wow';
 import { EMAILJS } from '../contact.config';
 import { fourCs, fourRs, embroideryFront, embroideryBack, stars, beyond, openWork, talk, profile } from '../data';
 
-/* ───────────── 4Cs → 4Rs: a growing tree ───────────── */
-// Roots (the 4Cs) are built underground; the blossoms (the 4Rs) grow from them.
-const ROOT_TIPS = [[150, 540], [380, 600], [620, 540], [850, 600]];
-const BLOOMS = [[180, 210], [385, 90], [615, 90], [820, 210]];
+/* ───────────── 4Cs → 4Rs: an ink-drawn tree ───────────── */
+// Roots (the 4Cs) are built underground; the buds (the 4Rs) grow from them.
+const ROOT_TIPS = [[170, 525], [390, 572], [610, 572], [830, 525]];
+const BLOOMS = [[190, 215], [390, 95], [610, 95], [810, 215]];
 const GROUND = 370;
-const PETAL_COLORS = ['#ff7a3d', '#e9b949', '#ff9bb3', '#86abe0'];
 
-function rootPath([x, y], i) {
-  const bend = i % 2 ? 60 : -60;
-  return `M500 ${GROUND} C ${500 + (x - 500) * 0.15} ${GROUND + 70}, ${x + bend} ${y - 120}, ${x} ${y}`;
+function rootPts([x, y], i) {
+  const bend = i % 2 ? 50 : -50;
+  return [[500, GROUND], [500 + (x - 500) * 0.12, GROUND + 80], [x + bend, y - 130], [x, y]];
+}
+function rootPath(p, i) {
+  const [p0, p1, p2, p3] = rootPts(p, i);
+  return `M${p0[0]} ${p0[1]} C ${p1[0]} ${p1[1]}, ${p2[0]} ${p2[1]}, ${p3[0]} ${p3[1]}`;
+}
+// Small rootlets that branch off each root at fixed points along it.
+function rootlets(p, i) {
+  return [[0.38, 1], [0.6, -1], [0.8, 1]].map(([t, side]) => {
+    const { x, y, a } = bez(t, rootPts(p, i));
+    const r = ((a + side * 55) * Math.PI) / 180;
+    const len = 26 - t * 10;
+    const ex = x + Math.cos(r) * len;
+    const ey = y + Math.sin(r) * len;
+    return `M${x.toFixed(1)} ${y.toFixed(1)} Q ${((x + ex) / 2 + side * 4).toFixed(1)} ${((y + ey) / 2).toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+  });
 }
 function branchPts([x, y]) {
-  return [[500, 240], [500 + (x - 500) * 0.35, 205], [x + (x < 500 ? 40 : -40), y + 60], [x, y]];
+  return [[500, 250], [500 + (x - 500) * 0.35, 212], [x + (x < 500 ? 40 : -40), y + 60], [x, y]];
 }
 function branchPath(b) {
   const [p0, p1, p2, p3] = branchPts(b);
@@ -30,9 +44,11 @@ function bez(t, [p0, p1, p2, p3]) {
   const d = (k) => 3 * u * u * (p1[k] - p0[k]) + 6 * u * t * (p2[k] - p1[k]) + 3 * t * t * (p3[k] - p2[k]);
   return { x: pt(0), y: pt(1), a: (Math.atan2(d(1), d(0)) * 180) / Math.PI };
 }
-const LEAVES = BLOOMS.flatMap((b, i) => [0.42, 0.68].map((t, j) => {
+// Fine outlined leaves sitting along each branch, alternating sides.
+const LEAVES = BLOOMS.flatMap((b, i) => [0.3, 0.5, 0.72].map((t, j) => {
   const { x, y, a } = bez(t, branchPts(b));
-  return { x, y, a: a + (j ? -35 : 35), side: j ? -1 : 1, k: i * 2 + j };
+  const side = j % 2 ? 1 : -1;
+  return { x, y, a: a + side * 50, k: i * 3 + j };
 }));
 
 export function FourCs() {
@@ -48,42 +64,63 @@ export function FourCs() {
         <Rv className={`tree ${hot !== null ? 'feeding' : ''}`}>
           <svg className="tree-svg" viewBox="0 0 1000 640" aria-hidden="true">
             <defs>
-              <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#7a5634" />
-                <stop offset="1" stopColor="#3b2818" />
+              <pattern id="stipple" width="9" height="9" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="3" r=".9" className="stip" />
+                <circle cx="7" cy="7" r=".6" className="stip" />
+              </pattern>
+              <linearGradient id="soilfade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#fff" stopOpacity="1" />
+                <stop offset="1" stopColor="#fff" stopOpacity="0" />
               </linearGradient>
-              <radialGradient id="glow" cx="50%" cy="0%" r="70%">
-                <stop offset="0" stopColor="#ffb27a" stopOpacity=".35" />
-                <stop offset="1" stopColor="#ffb27a" stopOpacity="0" />
-              </radialGradient>
+              <mask id="soilmask"><rect x="0" y={GROUND} width="1000" height={640 - GROUND} fill="url(#soilfade)" /></mask>
             </defs>
-            <rect x="0" y={GROUND} width="1000" height={640 - GROUND} rx="18" fill="url(#soil)" />
-            <rect x="0" y={GROUND} width="1000" height="160" fill="url(#glow)" />
-            <path d={`M0 ${GROUND} Q 250 ${GROUND - 10} 500 ${GROUND} T 1000 ${GROUND}`} className="grass" />
+
+            {/* ground */}
+            <rect x="0" y={GROUND} width="1000" height={640 - GROUND} fill="url(#stipple)" mask="url(#soilmask)" />
+            <path d={`M30 ${GROUND} H 970`} className="ground" />
+            {[90, 230, 700, 880].map((x) => (
+              <path key={x} d={`M${x} ${GROUND} l -4 -10 M${x + 4} ${GROUND} l 2 -13 M${x + 9} ${GROUND} l 5 -9`} className="grass-tuft" />
+            ))}
+
+            {/* roots */}
             {ROOT_TIPS.map((p, i) => (
-              <path key={i} d={rootPath(p, i)} className={`root ${hot === i ? 'on' : ''}`} style={{ '--i': i }} />
+              <g key={i} className={`root-g ${hot === i ? 'on' : ''}`} style={{ '--i': i }}>
+                <path d={rootPath(p, i)} className="root" />
+                {rootlets(p, i).map((d, k) => <path key={k} d={d} className="rootlet" />)}
+                <circle cx={p[0]} cy={p[1]} r="5" className="root-dot" />
+              </g>
             ))}
-            <path d={`M488 ${GROUND + 4} C 492 320, 494 280, 492 240 L 508 240 C 506 280, 508 320, 512 ${GROUND + 4} Z`} className="trunk" />
-            {BLOOMS.map((p, i) => (
-              <path key={i} d={branchPath(p)} className="branch" style={{ '--i': i }} />
-            ))}
+
+            {/* trunk: tapered ink shape */}
+            <path d={`M490 ${GROUND + 2} C 494 330, 496 290, 497 250 L 503 250 C 504 290, 506 330, 510 ${GROUND + 2} Z`} className="trunk" />
+
+            {/* branches + leaves */}
+            {BLOOMS.map((p, i) => <path key={i} d={branchPath(p)} className="branch" style={{ '--i': i }} />)}
             {LEAVES.map((l) => (
-              <ellipse key={l.k} cx={l.x} cy={l.y - 9 * l.side} rx="15" ry="6.5" transform={`rotate(${l.a} ${l.x} ${l.y - 9 * l.side})`} className="leaf" style={{ '--i': l.k }} />
+              <g key={l.k} className="leaf" style={{ '--i': l.k }} transform={`translate(${l.x} ${l.y}) rotate(${l.a})`}>
+                <path d="M0 0 Q 9 -7 20 0 Q 9 7 0 0 Z" className="leaf-shape" />
+                <path d="M1 0 H 18" className="leaf-vein" />
+              </g>
             ))}
+
+            {/* buds */}
             {BLOOMS.map(([x, y], i) => (
-              <g key={i} className="bloom" style={{ '--i': i, transformOrigin: `${x}px ${y}px` }}>
-                {[0, 72, 144, 216, 288].map((a) => (
-                  <ellipse key={a} cx={x} cy={y - 22} rx="15" ry="24" fill={PETAL_COLORS[i]} transform={`rotate(${a} ${x} ${y})`} />
-                ))}
-                <circle cx={x} cy={y} r="17" className="bloom-core" />
-                <text x={x} y={y + 7} textAnchor="middle" className="bloom-r">R</text>
+              <g key={i} className="bud" style={{ '--i': i, transformOrigin: `${x}px ${y}px` }}>
+                <circle cx={x} cy={y} r="19" className="bud-ring" />
+                <circle cx={x} cy={y} r="13" className="bud-ring2" />
+                <circle cx={x} cy={y} r="7" className="bud-core" />
               </g>
             ))}
           </svg>
 
           {BLOOMS.map(([x, y], i) => (
-            <div key={fourRs[i].k} className="tree-r" style={{ left: `${x / 10}%`, top: `${((i === 1 || i === 2 ? y - 78 : y + 44) / 640) * 100}%`, '--c': PETAL_COLORS[i], '--i': i }}>
-              {fourRs[i].k}
+            <div
+              key={fourRs[i].k}
+              className={`tree-r ${x < 500 ? 'l' : 'r'}`}
+              style={{ left: `${(x + (x < 500 ? -32 : 32)) / 10}%`, top: `${(y / 640) * 100}%`, '--i': i }}
+            >
+              <span className="tr-idx">R · 0{i + 1}</span>
+              <span className="tr-word">{fourRs[i].k}</span>
             </div>
           ))}
           {ROOT_TIPS.map(([x, y], i) => (
@@ -91,14 +128,15 @@ export function FourCs() {
               type="button"
               key={fourCs[i].k}
               className={`tree-c ${hot === i ? 'on' : ''}`}
-              style={{ left: `${x / 10}%`, top: `${(y / 640) * 100}%`, '--i': i }}
+              style={{ left: `${x / 10}%`, top: `${((y + 22) / 640) * 100}%`, '--i': i }}
               onMouseEnter={() => setHot(i)}
               onMouseLeave={() => setHot(null)}
               onFocus={() => setHot(i)}
               onBlur={() => setHot(null)}
               onClick={() => setHot(hot === i ? null : i)}
             >
-              <span className="tree-c-l">C</span>{fourCs[i].k}
+              <span className="tc-idx">C · 0{i + 1}</span>
+              <span className="tc-word">{fourCs[i].k}</span>
             </button>
           ))}
           <span className="tree-tag tree-tag-up">What follows</span>
