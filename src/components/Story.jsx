@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Rv, SecHead, useTilt } from './ui';
 import { confetti } from './Wow';
+import { EMAILJS } from '../contact.config';
 import { fourCs, fourRs, embroideryFront, embroideryBack, stars, beyond, openWork, talk, profile } from '../data';
 
 /* ───────────── 4Cs → 4Rs ───────────── */
@@ -323,7 +324,7 @@ export function Beyond() {
   );
 }
 
-/* ───────────── Contact form (Netlify Forms) ───────────── */
+/* ───────────── Contact form (EmailJS) ───────────── */
 export function ContactForm() {
   const [state, setState] = useState('idle'); // idle | sending | sent | error
   const submit = async (e) => {
@@ -333,10 +334,15 @@ export function ContactForm() {
     if (data.get('bot-field')) return;
     setState('sending');
     try {
-      const res = await fetch('/', {
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: EMAILJS.service,
+          template_id: EMAILJS.template,
+          user_id: EMAILJS.publicKey,
+          template_params: { name: data.get('name'), email: data.get('email'), message: data.get('message') },
+        }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setState('sent');
@@ -364,8 +370,7 @@ export function ContactForm() {
   }
 
   return (
-    <form className="note-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={submit}>
-      <input type="hidden" name="form-name" value="contact" />
+    <form className="note-form" name="contact" onSubmit={submit}>
       <p className="hp" aria-hidden="true"><label>Leave empty <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
       <div className="nf-row">
         <label>Your name<input name="name" required autoComplete="name" /></label>
