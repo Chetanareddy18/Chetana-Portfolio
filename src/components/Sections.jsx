@@ -91,7 +91,7 @@ export function Hero() {
               I don’t chase outcomes. <u>I build habits.</u> <span className="lede-sub">When interest drives you, you don’t calculate the cost. You just go.</span>
             </Rv>
             <Rv as="ul" className="spec" delay={200}>
-              <li>{profile.role}</li>
+              <li>Founder &amp; CEO · <b>Oronzo LLP</b></li>
               <li>B.Tech CSE · Data Science · ’27</li>
               <li>CGPA <b>{profile.cgpa}</b></li>
               <li>Gold Medal</li>

@@ -407,12 +407,11 @@ export const projects = [
 
 export const experience = [
   {
-    role: 'Founder & CEO',
+    role: 'Product Management & Systems Engineering Intern',
     org: 'Oronzo LLP',
     place: 'Hyderabad',
     when: 'Apr 2026 – Present',
     points: [
-      'Founded and run Oronzo LLP, an AI-focused company, alongside a full-time degree. Own product, systems and delivery decisions.',
       'Coordinate feature releases across 5+ AI product verticals running at the same time, from development to production.',
       'Write technical designs, deployment notes and performance reports, and share status with cross-functional teams each sprint.',
     ],
