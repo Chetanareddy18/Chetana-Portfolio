@@ -392,19 +392,6 @@ export const projects = [
   },
 ];
 
-export const journey = [
-  { y: '2023', m: 'Aug', t: 'Joined Woxsen University', s: 'B.Tech CSE, Data Science', line: 'edu' },
-  { y: '2025', m: 'Apr', t: 'Quadone Technologies', s: 'AI developer intern', line: 'work' },
-  { y: '2025', m: 'May', t: 'Sarvani Software · ITSR', s: 'Web development internships', line: 'work' },
-  { y: '2025', m: 'Sep', t: 'Supply chain warehouse', s: '16 sources, star schema', line: 'build' },
-  { y: '2026', m: 'Apr', t: 'Apollo Hospitals', s: 'AI/ML & data engineering intern', line: 'work' },
-  { y: '2026', m: 'Apr', t: 'Oronzo LLP', s: 'Product & systems intern', line: 'work' },
-  { y: '2026', m: '', t: 'Secure AI Hackathon', s: 'Finalist, top 46 (HoneyCloud-X)', line: 'win' },
-  { y: '2026', m: 'Aug', t: 'Invited speaker', s: 'Apollo Institute of Hospital Admin.', line: 'win' },
-  { y: '2026', m: 'Oct', t: 'Nasiko Buildathon', s: '1st place, Team Compact', line: 'win' },
-  { y: '2027', m: '', t: 'Graduating', s: 'Open to roles', line: 'edu' },
-];
-
 export const experience = [
   {
     role: 'Product Management & Systems Engineering Intern',

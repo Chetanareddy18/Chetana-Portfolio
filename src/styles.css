@@ -361,10 +361,33 @@ dialog[open].case-dlg { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
   .stop-dot { transition: transform .25s; }
 }
 
-/* experience logbook */
-.log { margin-top: 72px; display: grid; gap: 0; border-top: 1px solid var(--ink); }
-.log-row { display: grid; gap: 8px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
-@media (min-width: 860px) { .log-row { grid-template-columns: 200px 1fr 1.4fr; gap: 32px; } }
+/* experience timeline */
+.log { position: relative; display: grid; gap: 0; padding-left: 30px; }
+.log::before { content: ''; position: absolute; left: 6px; top: 34px; bottom: 34px; width: 2px; background: var(--rule); }
+.log-row { position: relative; display: grid; gap: 8px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+.log-row:first-child { border-top: 1px solid var(--ink); }
+.log-row::before { content: ''; position: absolute; left: -30px; top: 31px; width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 3px solid var(--ink); }
+.log-row.current::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.log-row.minor::before { width: 10px; height: 10px; left: -28px; border-width: 2px; border-color: var(--ink-3); }
+.log-now { display: inline-flex; align-items: center; gap: 6px; margin-left: 10px; color: var(--green); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+@media (min-width: 860px) {
+  .log { padding-left: 40px; }
+  .log::before { left: 8px; }
+  .log-row { grid-template-columns: 200px 1fr 1.4fr; gap: 32px; }
+  .log-row::before { left: -40px; }
+  .log-row.minor::before { left: -38px; }
+}
+
+/* education card */
+.edu { margin-top: 40px; display: grid; gap: 16px; align-items: center; background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--blue); border-radius: 8px; padding: 22px 22px; }
+@media (min-width: 860px) { .edu { grid-template-columns: 140px 1fr auto; gap: 28px; padding: 26px 30px; } }
+.edu-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+.edu-t { font-family: var(--serif); font-size: 22px; line-height: 1.2; }
+.edu-s { font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); margin-top: 6px; }
+.edu-stats { display: flex; gap: 28px; }
+.edu-stats div { display: grid; }
+.edu-stats b { font-family: var(--serif); font-size: 32px; font-weight: 450; line-height: 1; }
+.edu-stats span { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 4px; }
 .log-when { font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
 .log-role { font-family: var(--serif); font-size: 23px; line-height: 1.2; }
 .log-org { font-family: var(--mono); font-size: 12.5px; color: var(--accent-ink); margin-top: 6px; letter-spacing: .04em; }

@@ -3,16 +3,16 @@ import me from '../me.jpeg';
 import Schematic from './Schematic';
 import { Rv, SecHead, Icon, copyText } from './ui';
 import {
-  profile, now, bigNumbers, domains, projects, skills, journey, experience, honors, certs, archive,
+  profile, now, bigNumbers, domains, projects, skills, experience, honors, certs, archive,
 } from '../data';
 
 /* ───────────── Nav ───────────── */
 const LINKS = [
-  ['work', 'Case files'],
-  ['journey', 'Journey'],
-  ['proof', 'Proof'],
-  ['honors', 'Honors'],
-  ['archive', 'Archive'],
+  ['experience', 'Experience'],
+  ['work', 'Projects'],
+  ['proof', 'Skills'],
+  ['honors', 'Achievements'],
+  ['archive', 'More projects'],
   ['contact', 'Contact'],
 ];
 
@@ -88,7 +88,7 @@ export function Hero() {
               <li>Nasiko <b>1st</b></li>
             </Rv>
             <Rv className="cta" delay={260}>
-              <a className="btn" href="#work">Open the case files {Icon.arrowDown}</a>
+              <a className="btn" href="#work">See my projects {Icon.arrowDown}</a>
               <button className="btn ghost" onClick={() => copyText(profile.email)}>{Icon.mail} {profile.email}</button>
             </Rv>
           </div>
@@ -99,9 +99,6 @@ export function Hero() {
               <img src={me} alt="Palla Chetana Reddy, smiling, in a dark blazer" width="576" height="1280" />
               <figcaption>hi, I’m Chetana</figcaption>
             </figure>
-            <div className="stamp" aria-hidden="true">
-              <div>NASIKO<b>1st</b>2026</div>
-            </div>
             <div className="scribble" aria-hidden="true">
               <span>that’s me</span>
               <svg viewBox="0 0 64 50" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -218,9 +215,9 @@ export function CaseFiles({ openId, setOpenId }) {
     <section className="sec" id="work">
       <div className="wrap">
         <SecHead
-          no="01 · Case files"
-          title={<>Selected <em>work</em></>}
-          sub="Twelve projects, each drawn as the pipeline it actually runs. Open a file for what I built, the numbers, and where they come from."
+          no="02 · Projects"
+          title={<>Selected <em>projects</em></>}
+          sub="Twelve projects, each drawn as the pipeline it actually runs. Open one for what I built, the numbers, and where they come from."
         />
         <Rv className="filters" role="tablist" aria-label="Filter projects">
           {domains.map((d) => {
@@ -266,39 +263,23 @@ export function CaseFiles({ openId, setOpenId }) {
   );
 }
 
-/* ───────────── Journey ───────────── */
-export function Journey() {
+/* ───────────── Experience ───────────── */
+export function Experience() {
   return (
-    <section className="sec" id="journey">
+    <section className="sec" id="experience">
       <div className="wrap">
         <SecHead
-          no="02 · Journey"
-          title={<>The line <em>so far</em></>}
-          sub="One line, from the first semester to now. Blue stops are school, black are work and builds, orange are wins."
+          no="01 · Experience"
+          title={<>Where I’ve <em>worked</em></>}
+          sub="Internships, newest first."
         />
-        <Rv className="legend">
-          <span><i className="l-edu" /> Education</span>
-          <span><i /> Work</span>
-          <span><i className="l-build" /> Build</span>
-          <span><i className="l-win" /> Win</span>
-        </Rv>
-        <Rv className="metro">
-          {journey.map((s, i) => (
-            <div className={`stop ${s.line}`} key={i}>
-              <span className="stop-dot" />
-              <div className="stop-card">
-                <div className="stop-when">{s.m} {s.y}</div>
-                <div className="stop-t">{s.t}</div>
-                <div className="stop-s">{s.s}</div>
-              </div>
-            </div>
-          ))}
-        </Rv>
-
         <div className="log">
           {experience.map((e, i) => (
-            <Rv className={`log-row ${i > 2 ? 'minor' : ''}`} key={e.org}>
-              <div className="log-when">{e.when}</div>
+            <Rv className={`log-row ${i === 0 ? 'current' : ''} ${i > 2 ? 'minor' : ''}`} key={e.org}>
+              <div className="log-when">
+                {e.when}
+                {i === 0 && <span className="log-now"><span className="pulse" /> current</span>}
+              </div>
               <div>
                 <div className="log-role">{e.role}</div>
                 <div className="log-org">{e.org} · {e.place}</div>
@@ -307,6 +288,18 @@ export function Journey() {
             </Rv>
           ))}
         </div>
+
+        <Rv className="edu">
+          <div className="edu-tag">Education</div>
+          <div className="edu-main">
+            <div className="edu-t">B.Tech, Computer Science &amp; Engineering (Data Science)</div>
+            <div className="edu-s">Woxsen University, Hyderabad · 2023 – 2027</div>
+          </div>
+          <div className="edu-stats">
+            <div><b>{profile.cgpa}</b><span>CGPA / 10</span></div>
+            <div><b>Gold</b><span>Medal, academics</span></div>
+          </div>
+        </Rv>
       </div>
     </section>
   );
@@ -329,7 +322,7 @@ export function Proof({ setOpenId }) {
     <section className="sec" id="proof">
       <div className="wrap">
         <SecHead
-          no="03 · Proof"
+          no="03 · Skills"
           title={<>Skills, <em>with receipts</em></>}
           sub="No skill bars, no percentages. Each skill links to the projects where I used it. Click a project name to open its file."
         />
@@ -402,7 +395,7 @@ export function Honors() {
     <section className="sec" id="honors">
       <div className="wrap">
         <SecHead
-          no="04 · Honors"
+          no="04 · Achievements"
           title={<>Wins &amp; <em>recognition</em></>}
           sub="Hackathons, academics and a few things from school that I’m still proud of."
         />
@@ -452,8 +445,8 @@ export function Archive() {
     <section className="sec" id="archive">
       <div className="wrap">
         <SecHead
-          no="05 · Archive"
-          title={<>The <em>back catalogue</em></>}
+          no="05 · More projects"
+          title={<>More <em>projects</em></>}
           sub="Coursework, early experiments and side projects. Smaller, but this is where most of the learning happened."
         />
         <Rv className="arc-tools">
