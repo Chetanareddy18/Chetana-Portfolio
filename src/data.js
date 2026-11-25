@@ -562,7 +562,7 @@ export const stars = [
 export const beyond = [
   { icon: '🥋', t: 'I’ve broken granite with my hands', s: 'And tiles with my head. It’s really about technique and control.' },
   { icon: '💃', t: 'I dance', s: 'Different forms, all of them joyful.' },
-  { icon: '🏏', t: 'Kabaddi & cricket', s: 'Teamwork, and a lot of noise.' },
+  { icon: '🏅', t: 'I play sports', s: 'Kabaddi, cricket and more. Teamwork, and a lot of noise.' },
   { icon: '🏊', t: 'I swim', s: 'Calm, one length at a time.' },
   { icon: '🔭', t: 'I stare at the night sky', s: 'Astronomy since childhood.' },
   { icon: '📜', t: 'Indian mythology & the Vedas', s: 'Asking why ideas came about.' },
