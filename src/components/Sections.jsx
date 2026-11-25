@@ -264,10 +264,9 @@ function Polaroid() {
       <div className="pol-back" aria-hidden={!flip}>
         <span className="tape" aria-hidden="true" />
         <p className="pol-note">
-          I’m still learning.<br />
-          Still building.<br />
-          Still curious about what comes next.<br /><br />
-          And I’m just getting started. 🤍<br /><br />
+          Thanks for flipping me over! 🤍<br /><br />
+          <span className="pol-tag">Driven by data. Inspired by impact. Built for innovation.</span><br /><br />
+          I’m still learning. Still building. Still curious about what comes next.<br /><br />
           <b>{profile.email}</b>
         </p>
         <span className="pol-sign">— Chetana</span>

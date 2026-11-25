@@ -962,3 +962,5 @@ html.ink-cursor input, html.ink-cursor textarea { cursor: text !important; }
 .sticky-icon { font-size: 26px; display: block; margin-bottom: 6px; }
 .sticky-t { font-family: var(--hand); font-weight: 700; font-size: 23px; line-height: 1.05; }
 .sticky-s { font-family: var(--hand); font-size: 19px; line-height: 1.15; margin-top: 6px; color: #3a352c; }
+
+.pol-tag { font-weight: 700; color: #1f4e8c; }
