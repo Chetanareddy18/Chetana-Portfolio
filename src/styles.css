@@ -945,3 +945,6 @@ html.ink-cursor input, html.ink-cursor textarea { cursor: text !important; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } }
 
 .bcard-back .bcard-t { display: block; font-size: 15px; color: #ff9a68; margin-bottom: 8px; }
+
+.ow-q { margin: 0; padding-left: 12px; border-left: 3px solid #1a8917; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink); }
+.pol-note { font-size: 23px; line-height: 32px; }

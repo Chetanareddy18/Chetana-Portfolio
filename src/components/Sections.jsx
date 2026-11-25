@@ -264,9 +264,10 @@ function Polaroid() {
       <div className="pol-back" aria-hidden={!flip}>
         <span className="tape" aria-hidden="true" />
         <p className="pol-note">
-          Thanks for flipping me over!<br /><br />
-          I like turning messy data and fuzzy problems into tools people can trust.
-          If you have one of those, write to me:<br />
+          Hi, you found the back! 🌸<br />
+          I started learning before I started school, and I never stopped.
+          I stay curious, keep things clear, back myself, and show up on the hard days.
+          Say hi:<br />
           <b>{profile.email}</b>
         </p>
         <span className="pol-sign">— Chetana</span>

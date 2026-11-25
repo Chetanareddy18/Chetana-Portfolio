@@ -198,6 +198,7 @@ function WorkCard({ w, i }) {
         </div>
         <div className="ow-t">{w.t}</div>
         <div className="ow-s">{w.s}</div>
+        {w.q && <blockquote className="ow-q">“{w.q}”</blockquote>}
         <div className="ow-foot">
           <span>{w.stat}</span>
           <span className="ow-go">Open ↗</span>

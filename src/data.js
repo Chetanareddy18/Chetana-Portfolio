@@ -588,9 +588,10 @@ export const openWork = [
   },
   {
     kind: 'Writing', where: 'Medium', icon: '✍️',
-    t: 'Metacognition is the AI skill nobody is putting on their resume. They should be.',
-    s: 'Why metacognition, knowing how you think and learn, deserves a place on your resume.',
-    stat: 'Article on Medium',
+    t: 'Metacognition Is the AI Skill Nobody Is Putting on Their Resume. They Should Be.',
+    s: 'Everyone is racing to prompt better. The real edge is learning to think better while you do.',
+    q: 'Reviewing is not thinking.',
+    stat: '4 min read · Jun 5, 2026',
     u: 'https://medium.com/@pallachetana/metacognition-is-the-ai-skill-nobody-is-putting-on-their-resume-they-should-be-50dc1692e50c',
   },
 ];
