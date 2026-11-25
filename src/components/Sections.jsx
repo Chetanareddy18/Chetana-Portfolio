@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import me from '../me.jpeg';
 import Schematic from './Schematic';
 import { Rv, SecHead, Icon, copyText, useTilt } from './ui';
+import { CountUp, Medal, CertRing } from './Wow';
 import {
   profile, now, bigNumbers, domains, projects, skillGroups, experience, honors, certs, archive,
 } from '../data';
@@ -132,7 +133,7 @@ export function Band() {
       <div className="band-grid">
         {bigNumbers.map((b, i) => (
           <Rv className="band-cell" key={b.n} delay={i * 70}>
-            <div className="band-n">{b.n}</div>
+            <div className="band-n"><CountUp text={b.n} duration={1800} /></div>
             <div className="band-l">{b.l}</div>
             <div className="band-p">{b.p}</div>
           </Rv>
@@ -241,13 +242,35 @@ function CaseCard({ p, onOpen }) {
 
 function Polaroid() {
   const ref = useTilt(9);
+  const [flip, setFlip] = useState(false);
   return (
-    <figure className="polaroid tilt" ref={ref} style={{ margin: 0 }}>
-      <span className="tape" aria-hidden="true" />
-      <img src={me} alt="Palla Chetana Reddy, smiling, in a dark blazer" width="576" height="1280" />
-      <figcaption>hi, I’m Chetana</figcaption>
-      <span className="glare" aria-hidden="true" />
-    </figure>
+    <div
+      className={`pol-flip ${flip ? 'on' : ''}`}
+      onClick={() => setFlip(!flip)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlip(!flip); } }}
+      role="button"
+      tabIndex={0}
+      aria-pressed={flip}
+      aria-label="Flip the photo to read the note on the back"
+    >
+      <figure className="polaroid tilt" ref={ref} style={{ margin: 0 }}>
+        <span className="tape" aria-hidden="true" />
+        <img src={me} alt="Palla Chetana Reddy, smiling, in a dark blazer" width="576" height="1280" />
+        <figcaption>hi, I’m Chetana</figcaption>
+        <span className="glare" aria-hidden="true" />
+      </figure>
+      <div className="pol-back" aria-hidden={!flip}>
+        <span className="tape" aria-hidden="true" />
+        <p className="pol-note">
+          Thanks for flipping me over!<br /><br />
+          I like turning messy data and fuzzy problems into tools people can trust.
+          If you have one of those, write to me:<br />
+          <b>{profile.email}</b>
+        </p>
+        <span className="pol-sign">— Chetana</span>
+      </div>
+      <span className="pol-hint" aria-hidden="true">{flip ? 'tap to flip back' : 'tap me ↻'}</span>
+    </div>
   );
 }
 
@@ -442,10 +465,16 @@ export function Honors() {
           title={<>Wins &amp; <em>recognition</em></>}
           sub="Hackathons, academics and a few things from school that I’m still proud of."
         />
-        <div className="honors">
-          {honors.map((h, i) => (
-            <Rv className="honor" key={h.t} delay={(i % 3) * 60}>
-              <div className="honor-big">{h.big}</div>
+        <Rv className="podium">
+          {honors.slice(0, 3).map((h, i) => (
+            <Medal key={h.t} h={h} i={i} metal={['gold', 'silver', 'gold'][i]} party={i === 0} />
+          ))}
+        </Rv>
+
+        <div className="honors deal">
+          {honors.slice(3).map((h, i) => (
+            <Rv className="honor" key={h.t} delay={i * 90}>
+              <div className="honor-big"><CountUp text={h.big} /></div>
               <div className="honor-tag">{h.tag}{h.year ? ` · ${h.year}` : ''}</div>
               <div className="honor-t">{h.t}</div>
               <div className="honor-s">{h.s}</div>
@@ -453,13 +482,8 @@ export function Honors() {
           ))}
         </div>
 
-        <Rv className="ledger">
-          <h3>Certifications</h3>
-          <ol>
-            {certs.map((c) => (
-              <li key={c.n}><span className="lead">{c.n}</span><span className="by">{c.by}</span></li>
-            ))}
-          </ol>
+        <Rv>
+          <CertRing certs={certs} />
         </Rv>
       </div>
     </section>
