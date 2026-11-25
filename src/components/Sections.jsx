@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import me from '../me.jpeg';
 import Schematic from './Schematic';
-import { Rv, SecHead, Icon, copyText } from './ui';
+import { Rv, SecHead, Icon, copyText, useTilt } from './ui';
 import {
   profile, now, bigNumbers, domains, projects, skillGroups, experience, honors, certs, archive,
 } from '../data';
@@ -101,11 +101,7 @@ export function Hero() {
           </div>
 
           <Rv className="photo-col" delay={120}>
-            <figure className="polaroid" style={{ margin: 0 }}>
-              <span className="tape" aria-hidden="true" />
-              <img src={me} alt="Palla Chetana Reddy, smiling, in a dark blazer" width="576" height="1280" />
-              <figcaption>hi, I’m Chetana</figcaption>
-            </figure>
+            <Polaroid />
             <div className="scribble" aria-hidden="true">
               <span>that’s me</span>
               <svg viewBox="0 0 64 50" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -213,6 +209,53 @@ function CaseDialog({ project, onClose }) {
   );
 }
 
+function CaseCard({ p, onOpen }) {
+  const ref = useTilt(5);
+  return (
+    <article
+      ref={ref}
+      className="case tilt"
+      data-code={p.code}
+      tabIndex={0}
+      role="button"
+      aria-label={`Open project: ${p.title}`}
+      onClick={onOpen}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); } }}
+    >
+      <span className="glare" aria-hidden="true" />
+      <div className="case-top">
+        <div className="case-kicker">{p.kicker}</div>
+        <div className="case-date">{p.date}</div>
+      </div>
+      <h3>{p.title}</h3>
+      <p>{p.oneLine}</p>
+      <Schematic flow={p.flow} />
+      <div className="case-metric"><b>{p.metric.n}</b><span>{p.metric.l}</span></div>
+      <div className="case-foot">
+        <div className="tags">{p.stack.slice(0, 4).map((s) => <span className="tag" key={s}>{s}</span>)}</div>
+        <span className="open">Open project <i>→</i></span>
+      </div>
+    </article>
+  );
+}
+
+function Polaroid() {
+  const ref = useTilt(9);
+  return (
+    <figure className="polaroid tilt" ref={ref} style={{ margin: 0 }}>
+      <span className="tape" aria-hidden="true" />
+      <img src={me} alt="Palla Chetana Reddy, smiling, in a dark blazer" width="576" height="1280" />
+      <figcaption>hi, I’m Chetana</figcaption>
+      <span className="glare" aria-hidden="true" />
+    </figure>
+  );
+}
+
+function Postcard({ children }) {
+  const ref = useTilt(3);
+  return <div className="postcard tilt" ref={ref}>{children}</div>;
+}
+
 export function CaseFiles({ openId, setOpenId }) {
   const [dom, setDom] = useState('all');
   const list = dom === 'all' ? projects : projects.filter((p) => p.domain.includes(dom));
@@ -239,28 +282,7 @@ export function CaseFiles({ openId, setOpenId }) {
         <div className="cases">
           {list.map((p, i) => (
             <Rv key={p.id} delay={(i % 2) * 80}>
-              <article
-                className="case"
-                data-code={p.code}
-                tabIndex={0}
-                role="button"
-                aria-label={`Open case file: ${p.title}`}
-                onClick={() => setOpenId(p.id)}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenId(p.id); } }}
-              >
-                <div className="case-top">
-                  <div className="case-kicker">{p.kicker}</div>
-                  <div className="case-date">{p.date}</div>
-                </div>
-                <h3>{p.title}</h3>
-                <p>{p.oneLine}</p>
-                <Schematic flow={p.flow} />
-                <div className="case-metric"><b>{p.metric.n}</b><span>{p.metric.l}</span></div>
-                <div className="case-foot">
-                  <div className="tags">{p.stack.slice(0, 4).map((s) => <span className="tag" key={s}>{s}</span>)}</div>
-                  <span className="open">Open file <i>→</i></span>
-                </div>
-              </article>
+              <CaseCard p={p} onOpen={() => setOpenId(p.id)} />
             </Rv>
           ))}
         </div>
@@ -312,74 +334,99 @@ export function Experience() {
   );
 }
 
-/* ───────────── Skills (periodic table / sticky notes) ───────────── */
-const NOTE_TILT = [-3, 2, -1.5, 3, -2, 1.5, -2.5, 2];
-
+/* ───────────── Skills (3D periodic table) ───────────── */
 export function Skills() {
-  const [view, setView] = useState('table');
   const [focus, setFocus] = useState(null);
+  const [shown, setShown] = useState(false);
+  const [flipped, setFlipped] = useState(null);
+  const stageRef = useRef(null);
+  const tableRef = useRef(null);
   const total = skillGroups.reduce((n, g) => n + g.skills.length, 0);
-  let no = 0;
 
+  // deal-in animation when the table scrolls into view
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) { setShown(true); return; }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // whole-table tilt that follows the mouse
+  useEffect(() => {
+    const stage = stageRef.current;
+    const table = tableRef.current;
+    if (!stage || !table) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(hover: none)').matches) return;
+    let raf = 0;
+    const onMove = (e) => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        table.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
+        table.style.setProperty('--rx', `${(-y * 8).toFixed(2)}deg`);
+      });
+    };
+    const onLeave = () => { table.style.setProperty('--ry', '0deg'); table.style.setProperty('--rx', '0deg'); };
+    stage.addEventListener('mousemove', onMove);
+    stage.addEventListener('mouseleave', onLeave);
+    return () => { stage.removeEventListener('mousemove', onMove); stage.removeEventListener('mouseleave', onLeave); cancelAnimationFrame(raf); };
+  }, []);
+
+  let no = 0;
   return (
     <section className="sec" id="proof">
       <div className="wrap">
         <SecHead
           no="03 · Skills"
           title={<>My <em>toolkit</em></>}
-          sub={`${total} skills across ${skillGroups.length} areas. ★ marks the ones I use every day.`}
+          sub={`${total} skills across ${skillGroups.length} areas, laid out like a periodic table. ★ marks the ones I use every day. Hover or tap a tile to flip it.`}
         />
-
-        <Rv className="sk-switch" role="tablist" aria-label="Choose how to view skills">
-          <button role="tab" aria-selected={view === 'table'} className={view === 'table' ? 'on' : ''} onClick={() => setView('table')}>Periodic table</button>
-          <button role="tab" aria-selected={view === 'notes'} className={view === 'notes' ? 'on' : ''} onClick={() => setView('notes')}>Sticky notes</button>
-        </Rv>
-
-        {view === 'table' ? (
-          <div className="pt-wrap" key="table">
-            <div className="pt">
-              {skillGroups.map((g) =>
-                g.skills.map(([name, sym, top]) => {
-                  no += 1;
-                  const dim = focus && focus !== g.cat;
-                  return (
-                    <div key={name} className={`el ${dim ? 'dim' : ''}`} style={{ background: g.col }} title={`${name} · ${g.cat}`}>
-                      <div className="el-no">{no}{top ? <span className="el-star"> ★</span> : null}</div>
-                      <div className="el-sym">{sym}</div>
-                      <div className="el-nm">{name}</div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-            <div className="pt-leg">
-              {skillGroups.map((g) => (
-                <button
-                  key={g.cat}
-                  className={focus === g.cat ? 'on' : ''}
-                  onClick={() => setFocus(focus === g.cat ? null : g.cat)}
-                  aria-pressed={focus === g.cat}
-                >
-                  <i style={{ background: g.col }} />{g.cat}
-                </button>
-              ))}
-              {focus && <button className="pt-reset" onClick={() => setFocus(null)}>show all</button>}
-            </div>
+        <div className="pt-stage" ref={stageRef}>
+          <div className={`pt ${shown ? 'shown' : ''}`} ref={tableRef}>
+            {skillGroups.map((g) =>
+              g.skills.map(([name, sym, top]) => {
+                no += 1;
+                const i = no;
+                const dim = focus && focus !== g.cat;
+                return (
+                  <button
+                    type="button"
+                    key={name}
+                    className={`el ${dim ? 'dim' : ''} ${flipped === name ? 'flip' : ''}`}
+                    style={{ '--c': g.col, '--i': i }}
+                    onClick={() => setFlipped(flipped === name ? null : name)}
+                    aria-label={`${name}, ${g.cat}${top ? ', used daily' : ''}`}
+                  >
+                    <span className="el-in">
+                      <span className="el-face el-front">
+                        <span className="el-no">{i}{top ? <span className="el-star"> ★</span> : null}</span>
+                        <span className="el-sym">{sym}</span>
+                        <span className="el-nm">{name}</span>
+                      </span>
+                      <span className="el-face el-back">
+                        <span className="el-back-cat">{g.cat}</span>
+                        <span className="el-back-nm">{name}</span>
+                        {top ? <span className="el-back-tag">★ daily</span> : null}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })
+            )}
           </div>
-        ) : (
-          <div className="board" key="notes">
-            {skillGroups.map((g, i) => (
-              <div className="note" key={g.cat} style={{ background: g.note, '--tilt': `${NOTE_TILT[i % NOTE_TILT.length]}deg` }}>
-                <h4>{g.cat}</h4>
-                <ul>
-                  {g.skills.map(([name, , top]) => (
-                    <li key={name} className={top ? 'star' : ''}>{name}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
+        </div>
+        <div className="pt-leg">
+          {skillGroups.map((g) => (
+            <button key={g.cat} className={focus === g.cat ? 'on' : ''} onClick={() => setFocus(focus === g.cat ? null : g.cat)} aria-pressed={focus === g.cat}>
+              <i style={{ background: g.col }} />{g.cat}
+            </button>
+          ))}
+          {focus && <button className="pt-reset" onClick={() => setFocus(null)}>show all</button>}
+        </div>
       </div>
     </section>
   );
@@ -487,7 +534,8 @@ export function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="wrap">
-        <Rv className="postcard">
+        <Rv>
+        <Postcard>
           <div className="pc-left">
             <div className="sec-no">06 · Contact</div>
             <h2>Let’s build <em>something</em> worth checking.</h2>
@@ -515,6 +563,7 @@ export function Contact() {
               <text x="60" y="74" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontSize="8" letterSpacing="2" fill="currentColor">POSTED</text>
             </svg>
           </div>
+        </Postcard>
         </Rv>
       </div>
       <div className="wrap">

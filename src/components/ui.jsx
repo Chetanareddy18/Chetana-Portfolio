@@ -21,6 +21,38 @@ export function Rv({ as: Tag = 'div', className = '', delay = 0, children, ...re
   );
 }
 
+// 3D tilt that follows the mouse. Sets --trx / --try on the element; CSS does the transform.
+export function useTilt(max = 7) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(hover: none)').matches) return;
+    let raf = 0;
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.setProperty('--try', `${(x * max * 2).toFixed(2)}deg`);
+        el.style.setProperty('--trx', `${(-y * max * 2).toFixed(2)}deg`);
+        el.style.setProperty('--gx', `${((x + 0.5) * 100).toFixed(1)}%`);
+        el.style.setProperty('--gy', `${((y + 0.5) * 100).toFixed(1)}%`);
+      });
+    };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      el.style.setProperty('--try', '0deg');
+      el.style.setProperty('--trx', '0deg');
+    };
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => { el.removeEventListener('mousemove', onMove); el.removeEventListener('mouseleave', onLeave); cancelAnimationFrame(raf); };
+  }, [max]);
+  return ref;
+}
+
 export function SecHead({ no, title, sub }) {
   return (
     <Rv className="sec-head">
