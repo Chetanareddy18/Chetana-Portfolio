@@ -163,7 +163,6 @@ export const projects = [
     title: 'KAIROS',
     kicker: 'Causal root-cause agent · capstone',
     date: 'Aug – Oct 2026',
-    team: 'With Varshini Yadav Nasaram and Obulagari Nandini',
     domain: ['agents', 'ml'],
     oneLine:
       'Watches business metrics every 15 minutes, flags anomalies, and traces them to a likely root cause instead of just raising an alarm.',
@@ -270,7 +269,6 @@ export const projects = [
     title: 'IncidentOps',
     kicker: 'OpenEnv benchmark for AI on-call agents',
     date: 'Apr 2026',
-    team: 'Team Visionary Coders',
     domain: ['agents'],
     oneLine:
       'A simulated fintech production system that breaks on purpose, so you can test whether an AI agent can fix it.',
@@ -380,7 +378,6 @@ export const projects = [
     title: 'DRIFT',
     kicker: 'Deep RL trading research · tech lead',
     date: 'Oct 2026',
-    team: 'With Varshini Yadav Nasaram and Obulagari Nandini',
     domain: ['ml'],
     oneLine:
       'A regime-aware, friction-aware reward for RL trading agents, and an honest report of what did and didn’t work.',
